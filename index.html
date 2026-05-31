@@ -1,1082 +1,710 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<title>Sirf Tere Liye, Zoya 🌙</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,600&family=DM+Mono:wght@300;400&family=Quicksand:wght@300;400;500;600&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sirf Aapke Liye, Zoya Didu 🌙</title>
+<link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Quicksand:wght@300;400;500;600&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bg:#030208;
-  --pink:#ff6eb4;--pink2:#ff9fd0;
-  --purple:#c084fc;--purple2:#d8b4fe;
-  --blue:#7dd3fc;--blue2:#bae6fd;
-  --gold:#fbbf24;--gold2:#fde68a;
-  --green:#6ee7b7;
-  --teal:#2dd4bf;
-  --card:rgba(255,255,255,0.032);
-  --card2:rgba(255,255,255,0.055);
-  --border:rgba(255,255,255,0.07);
-  --border2:rgba(255,255,255,0.12);
-  --muted:rgba(255,255,255,0.38);
-  --text:rgba(255,255,255,0.82);
+:root {
+  --bg: #040308;
+  --pink: #ff6eb4;
+  --purple: #c084fc;
+  --blue: #7dd3fc;
+  --gold: #fbbf24;
+  --green: #6ee7b7;
+  --card: rgba(255,255,255,0.03);
+  --border: rgba(255,255,255,0.07);
+  --muted: rgba(255,255,255,0.4);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);min-height:100vh;font-family:'Quicksand',sans-serif;color:#fff;overflow-x:hidden;cursor:none;}
 
-/* ── CURSOR ── */
-#cursor{position:fixed;width:14px;height:14px;background:var(--pink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .08s;box-shadow:0 0 14px var(--pink),0 0 28px var(--pink);mix-blend-mode:screen;}
-#cursor-trail{position:fixed;width:34px;height:34px;border:1.5px solid rgba(255,110,180,0.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .16s ease;}
-
-/* ── FIXED LAYERS ── */
-#rain-canvas,#aurora-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;}
-#aurora-canvas{z-index:0;opacity:.7;}
-#rain-canvas{z-index:1;opacity:.6;}
-#lightning{position:fixed;inset:0;pointer-events:none;z-index:1;background:transparent;transition:background .05s;}
-
-/* ── PAGE INTRO OVERLAY ── */
-#intro-overlay{position:fixed;inset:0;z-index:10000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity 1.2s ease,visibility 1.2s;}
-#intro-overlay.gone{opacity:0;visibility:hidden;pointer-events:none;}
-.intro-moon{width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 38% 36%,#f0f4ff,#c9d6ff 50%,#a0b0e8);box-shadow:0 0 40px 16px rgba(180,200,255,.25),0 0 100px 40px rgba(140,160,240,.12);animation:moonPulse 2s ease-in-out infinite;}
-@keyframes moonPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.06);}}
-.intro-name{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(3.5rem,15vw,6rem);color:#fff;text-shadow:0 0 20px rgba(200,215,255,.8),0 0 60px rgba(180,200,255,.5),0 0 120px rgba(140,160,230,.3);}
-.intro-sub{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.25em;color:rgba(180,200,255,.5);text-transform:uppercase;}
-.intro-enter{margin-top:12px;background:rgba(255,110,180,.1);border:1px solid rgba(255,110,180,.3);border-radius:100px;padding:11px 30px;color:var(--pink);font-family:'Quicksand',sans-serif;font-size:.82rem;letter-spacing:.1em;cursor:none;transition:all .3s;backdrop-filter:blur(8px);}
-.intro-enter:hover{background:rgba(255,110,180,.2);transform:scale(1.04);}
-.intro-stars{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
-
-/* ── FLOATING ORBS ── */
-.orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:floatOrb var(--d,22s) ease-in-out infinite alternate;}
-.orb:nth-child(1){width:500px;height:500px;background:rgba(192,132,252,.07);top:-150px;left:-100px;--d:28s;}
-.orb:nth-child(2){width:400px;height:400px;background:rgba(255,110,180,.06);bottom:5%;right:-80px;--d:20s;animation-delay:-7s;}
-.orb:nth-child(3){width:350px;height:350px;background:rgba(125,211,252,.05);top:35%;left:25%;--d:32s;animation-delay:-14s;}
-.orb:nth-child(4){width:280px;height:280px;background:rgba(110,231,183,.04);bottom:20%;left:10%;--d:25s;animation-delay:-5s;}
-@keyframes floatOrb{0%{transform:translate(0,0) scale(1);}100%{transform:translate(40px,60px) scale(1.15);}}
-
-/* ── SCROLL WRAPPER ── */
-#app{position:relative;z-index:2;width:100%;max-width:580px;margin:0 auto;padding:0 18px 80px;display:flex;flex-direction:column;align-items:center;}
-
-/* ── SCENE SVG ── */
-.scene{width:100%;border-radius:0 0 28px 28px;overflow:hidden;position:relative;flex-shrink:0;}
-.scene svg{width:100%;display:block;}
-
-/* ── TITLE ── */
-.title-wrap{text-align:center;margin:14px 0 4px;position:relative;}
-.neon-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;font-size:clamp(4.5rem,17vw,7.5rem);color:#fff;letter-spacing:.06em;
-  text-shadow:0 0 7px #fff,0 0 22px var(--pink),0 0 55px var(--pink),0 0 110px var(--purple),0 0 180px var(--purple);
-  animation:flicker 8s infinite,titleFloat 5s ease-in-out infinite;display:inline-block;user-select:none;}
-@keyframes flicker{0%,90%,92%,94%,96%,100%{opacity:1;}91%{opacity:.65;}93%{opacity:.82;}95%{opacity:.55;}97%{opacity:1;}98%{opacity:.7;}99%{opacity:1;}}
-@keyframes titleFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
-.neon-sub{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-.days-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:100px;padding:6px 16px;font-family:'DM Mono',monospace;font-size:.62rem;color:rgba(180,200,255,.5);letter-spacing:.1em;margin-bottom:10px;backdrop-filter:blur(8px);}
-.live-dot{width:6px;height:6px;border-radius:50%;background:rgba(160,220,160,.7);box-shadow:0 0 6px 2px rgba(160,220,160,.4);animation:livePulse 2s ease-in-out infinite;flex-shrink:0;}
-@keyframes livePulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
-
-/* ── SCROLL HINT ── */
-.scroll-hint{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;color:rgba(255,255,255,.18);text-transform:uppercase;margin:8px 0 28px;text-align:center;animation:bounceHint 2.5s ease-in-out infinite;}
-@keyframes bounceHint{0%,100%{transform:translateY(0);}50%{transform:translateY(5px);}}
-
-/* ── SECTION TITLE ── */
-.sec-title{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-align:center;width:100%;margin-bottom:16px;}
-
-/* ── MOOD BADGES ── */
-.mood-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;width:100%;}
-.mood-badge{font-size:.68rem;letter-spacing:.1em;padding:6px 14px;border-radius:100px;border:1px solid var(--border);color:var(--muted);cursor:none;transition:all .3s cubic-bezier(.34,1.56,.64,1);background:var(--card);}
-.mood-badge:hover{color:#fff;border-color:var(--border2);transform:scale(1.08);}
-.mood-badge.active{color:#fff;background:rgba(255,110,180,.15);border-color:rgba(255,110,180,.5);box-shadow:0 0 18px rgba(255,110,180,.2);}
-#moodReply{width:100%;text-align:center;font-size:.82rem;color:rgba(255,255,255,.5);font-style:italic;min-height:24px;margin-bottom:24px;transition:all .4s;line-height:1.7;}
-
-/* ── GLASS CARDS ── */
-.glass{background:var(--card);border:1px solid var(--border);border-radius:22px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 8px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.06);}
-
-/* ── OPEN WHEN BUTTONS ── */
-.ow-wrap{width:100%;display:flex;flex-direction:column;gap:10px;}
-.ow-btn{width:100%;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px 20px;display:flex;align-items:center;gap:14px;cursor:none;transition:all .32s cubic-bezier(.34,1.56,.64,1);text-align:left;position:relative;overflow:hidden;}
-.ow-btn::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s;border-radius:inherit;}
-.ow-btn[data-col="pink"]::before{background:radial-gradient(ellipse at 15% 50%,rgba(255,110,180,.14),transparent 65%);}
-.ow-btn[data-col="purple"]::before{background:radial-gradient(ellipse at 15% 50%,rgba(192,132,252,.14),transparent 65%);}
-.ow-btn[data-col="blue"]::before{background:radial-gradient(ellipse at 15% 50%,rgba(125,211,252,.13),transparent 65%);}
-.ow-btn[data-col="green"]::before{background:radial-gradient(ellipse at 15% 50%,rgba(110,231,183,.12),transparent 65%);}
-.ow-btn[data-col="gold"]::before{background:radial-gradient(ellipse at 15% 50%,rgba(251,191,36,.12),transparent 65%);}
-.ow-btn[data-col="teal"]::before{background:radial-gradient(ellipse at 15% 50%,rgba(45,212,191,.12),transparent 65%);}
-.ow-btn:hover::before,.ow-btn.open::before{opacity:1;}
-.ow-btn:hover{transform:translateX(5px) translateY(-1px);border-color:var(--border2);box-shadow:0 6px 28px rgba(0,0,0,.3);}
-.ow-btn.open{border-color:var(--border2);}
-.ow-icon{font-size:1.5rem;flex-shrink:0;}
-.ow-text{flex:1;}
-.ow-label{font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:3px;}
-.ow-title{font-size:.92rem;font-weight:600;color:var(--text);line-height:1.3;display:block;}
-.ow-sub{font-size:.72rem;font-style:italic;color:rgba(255,255,255,.35);display:block;margin-top:2px;}
-.ow-arrow{font-size:1.1rem;color:var(--muted);transition:transform .35s cubic-bezier(.34,1.56,.64,1);flex-shrink:0;}
-.ow-btn.open .ow-arrow{transform:rotate(90deg);color:#fff;}
-.ow-msg{max-height:0;overflow:hidden;transition:max-height .65s cubic-bezier(.4,0,.2,1),opacity .5s,margin .3s;opacity:0;margin-top:0;}
-.ow-msg.open{max-height:600px;opacity:1;margin-top:6px;margin-bottom:2px;}
-.ow-msg-inner{padding:22px 20px;border:1px solid var(--border);border-radius:18px;font-size:.86rem;line-height:1.95;color:rgba(200,210,240,.75);position:relative;}
-.ow-msg[data-col="pink"] .ow-msg-inner{background:linear-gradient(135deg,rgba(255,110,180,.07),transparent);border-color:rgba(255,110,180,.16);}
-.ow-msg[data-col="purple"] .ow-msg-inner{background:linear-gradient(135deg,rgba(192,132,252,.07),transparent);border-color:rgba(192,132,252,.16);}
-.ow-msg[data-col="blue"] .ow-msg-inner{background:linear-gradient(135deg,rgba(125,211,252,.07),transparent);border-color:rgba(125,211,252,.15);}
-.ow-msg[data-col="green"] .ow-msg-inner{background:linear-gradient(135deg,rgba(110,231,183,.07),transparent);border-color:rgba(110,231,183,.15);}
-.ow-msg[data-col="gold"] .ow-msg-inner{background:linear-gradient(135deg,rgba(251,191,36,.07),transparent);border-color:rgba(251,191,36,.15);}
-.ow-msg[data-col="teal"] .ow-msg-inner{background:linear-gradient(135deg,rgba(45,212,191,.07),transparent);border-color:rgba(45,212,191,.15);}
-.ow-msg-inner p{margin-bottom:11px;}
-.ow-msg-inner p:last-child{margin-bottom:0;}
-.sign-off{display:block;margin-top:16px;font-family:'Dancing Script',cursive;font-size:1.1rem;opacity:.55;text-align:right;}
-.qmark{font-family:'Cormorant Garamond',serif;font-size:3.5rem;line-height:.4;vertical-align:-1rem;margin-right:2px;opacity:.15;}
-.hl{font-style:italic;font-family:'Dancing Script',cursive;font-size:1rem;}
-
-/* ── DIVIDER ── */
-.divider{width:45%;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.07),transparent);margin:34px 0;}
-
-/* ── MEMORY JAR ── */
-.jar-section{width:100%;}
-.mem-input-row{display:flex;gap:8px;margin-bottom:12px;}
-.mem-input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:#fff;font-family:'Quicksand',sans-serif;font-size:.86rem;outline:none;transition:border-color .3s;backdrop-filter:blur(8px);}
-.mem-input::placeholder{color:var(--muted);}
-.mem-input:focus{border-color:rgba(255,110,180,.4);box-shadow:0 0 0 3px rgba(255,110,180,.05);}
-.mem-add{background:rgba(255,110,180,.12);border:1px solid rgba(255,110,180,.28);border-radius:12px;padding:12px 18px;color:var(--pink);cursor:none;font-size:1rem;transition:all .3s;flex-shrink:0;}
-.mem-add:hover{background:rgba(255,110,180,.22);transform:scale(1.06);}
-.mem-jar{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;min-height:80px;max-height:200px;overflow-y:auto;backdrop-filter:blur(8px);}
-.mem-item{font-size:.82rem;color:rgba(255,255,255,.6);padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:flex-start;gap:9px;}
-.mem-item:last-child{border-bottom:none;}
-.mem-dot{width:6px;height:6px;border-radius:50%;background:var(--pink);flex-shrink:0;margin-top:5px;box-shadow:0 0 6px var(--pink);}
-.jar-empty{color:var(--muted);font-size:.78rem;text-align:center;padding:18px 0;font-style:italic;}
-
-/* ── LOVE LETTER ── */
-.letter-btn{width:100%;background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.18);border-radius:20px;padding:18px 22px;display:flex;align-items:center;gap:14px;cursor:none;transition:all .32s;}
-.letter-btn:hover{background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.38);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,.35);}
-.letter-body{max-height:0;overflow:hidden;transition:max-height .65s cubic-bezier(.4,0,.2,1),opacity .5s;opacity:0;}
-.letter-body.open{max-height:800px;opacity:1;}
-.letter-inner{margin-top:12px;background:rgba(251,191,36,.04);border:1px solid rgba(251,191,36,.12);border-radius:18px;padding:28px 24px;font-size:.88rem;line-height:2.05;color:rgba(255,255,255,.72);}
-.letter-date{font-size:.64rem;letter-spacing:.2em;color:rgba(251,191,36,.45);text-transform:uppercase;margin-bottom:18px;display:block;}
-.letter-end{margin-top:20px;font-family:'Dancing Script',cursive;font-size:1.15rem;color:rgba(251,191,36,.55);text-align:right;display:block;}
-.l-arrow{color:rgba(251,191,36,.45);font-size:1.1rem;transition:transform .35s;flex-shrink:0;}
-
-/* ── COUNTDOWN ── */
-.cd-display{display:flex;justify-content:center;gap:18px;padding:22px;background:var(--card);border:1px solid var(--border);border-radius:18px;backdrop-filter:blur(12px);}
-.cd-unit{text-align:center;}
-.cd-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:300;color:var(--pink);text-shadow:0 0 20px var(--pink);display:block;animation:numGlow 3s ease-in-out infinite;}
-@keyframes numGlow{0%,100%{text-shadow:0 0 20px var(--pink);}50%{text-shadow:0 0 35px var(--pink),0 0 60px rgba(255,110,180,.3);}}
-.cd-label{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
-.cd-note{text-align:center;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;color:rgba(255,255,255,.16);margin-top:10px;font-style:italic;}
-
-/* ── WISH BOARD ── */
-.wish-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;}
-.wish-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;text-align:center;cursor:none;transition:all .32s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden;}
-.wish-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s;border-radius:inherit;}
-.wish-card:nth-child(1)::before{background:radial-gradient(circle,rgba(255,110,180,.16),transparent 70%);}
-.wish-card:nth-child(2)::before{background:radial-gradient(circle,rgba(192,132,252,.16),transparent 70%);}
-.wish-card:nth-child(3)::before{background:radial-gradient(circle,rgba(125,211,252,.15),transparent 70%);}
-.wish-card:nth-child(4)::before{background:radial-gradient(circle,rgba(110,231,183,.15),transparent 70%);}
-.wish-card:hover::before{opacity:1;}
-.wish-card:hover{transform:scale(1.04) translateY(-2px);border-color:var(--border2);}
-.wish-icon{font-size:1.8rem;display:block;margin-bottom:6px;}
-.wish-title{font-size:.78rem;font-weight:600;color:var(--text);}
-.wish-sub{font-size:.63rem;color:var(--muted);margin-top:3px;}
-.wish-reveal{max-height:0;overflow:hidden;transition:max-height .45s ease,opacity .4s;opacity:0;margin-top:0;}
-.wish-reveal.open{max-height:130px;opacity:1;margin-top:10px;}
-.wish-reveal p{font-size:.76rem;color:rgba(255,255,255,.58);line-height:1.65;font-style:italic;}
-
-/* ── SECRET KNOCK ── */
-.secret-wrap{width:100%;background:var(--card);border:1px dashed var(--border);border-radius:18px;padding:22px;cursor:none;transition:all .4s;text-align:center;}
-.secret-wrap:hover{border-color:rgba(192,132,252,.3);background:rgba(192,132,252,.03);}
-.secret-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
-.secret-content{max-height:0;overflow:hidden;transition:max-height .7s ease,opacity .6s;opacity:0;}
-.secret-content.open{max-height:350px;opacity:1;}
-.secret-poem{margin-top:18px;font-family:'Dancing Script',cursive;font-size:1.05rem;line-height:2.2;color:rgba(255,255,255,.68);text-align:center;}
-
-/* ── TYPING GAME ── */
-.game-section{width:100%;}
-.game-card{width:100%;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:22px;backdrop-filter:blur(12px);}
-.game-prompt{font-size:.86rem;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:14px;font-style:italic;min-height:56px;}
-.game-options{display:flex;flex-direction:column;gap:8px;}
-.game-opt{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;padding:12px 16px;cursor:none;text-align:left;font-family:'Quicksand',sans-serif;font-size:.84rem;color:var(--text);transition:all .3s;}
-.game-opt:hover{border-color:var(--border2);background:rgba(255,255,255,.06);transform:translateX(4px);}
-.game-opt.correct{border-color:var(--green);background:rgba(110,231,183,.1);color:var(--green);}
-.game-opt.wrong{border-color:var(--pink);background:rgba(255,110,180,.08);color:rgba(255,110,180,.7);}
-.game-result{font-size:.82rem;color:rgba(255,255,255,.5);margin-top:14px;font-style:italic;min-height:22px;text-align:center;}
-.game-next{margin-top:12px;width:100%;background:rgba(192,132,252,.12);border:1px solid rgba(192,132,252,.28);border-radius:12px;padding:11px;color:var(--purple);font-family:'Quicksand',sans-serif;font-size:.82rem;cursor:none;transition:all .3s;display:none;}
-.game-next.show{display:block;}
-.game-next:hover{background:rgba(192,132,252,.22);}
-.score-row{display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--muted);margin-bottom:16px;letter-spacing:.08em;}
-
-/* ── MINI MUSIC PLAYER ── */
-.player-card{width:100%;background:var(--card);border:1px solid var(--border);border-radius:22px;padding:20px;backdrop-filter:blur(14px);}
-.player-track{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
-.track-art{width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,rgba(255,110,180,.3),rgba(192,132,252,.3));display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;animation:artRotate 8s linear infinite paused;}
-.track-art.playing{animation-play-state:running;}
-@keyframes artRotate{0%{transform:rotate(0);}100%{transform:rotate(360deg);}}
-.track-info{flex:1;overflow:hidden;}
-.track-name{font-size:.88rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.track-by{font-size:.68rem;color:var(--muted);margin-top:2px;}
-.player-bar{height:3px;background:rgba(255,255,255,.08);border-radius:10px;margin-bottom:12px;cursor:none;position:relative;overflow:hidden;}
-.player-progress{height:100%;background:linear-gradient(to right,var(--pink),var(--purple));border-radius:10px;width:0%;transition:width .3s linear;}
-.player-controls{display:flex;align-items:center;justify-content:center;gap:18px;}
-.pc-btn{background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:none;transition:all .3s;line-height:1;}
-.pc-btn:hover{color:#fff;transform:scale(1.2);}
-.pc-play{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--purple));border:none;display:flex;align-items:center;justify-content:center;cursor:none;font-size:1.1rem;transition:all .3s;box-shadow:0 0 20px rgba(255,110,180,.3);}
-.pc-play:hover{transform:scale(1.1);box-shadow:0 0 30px rgba(255,110,180,.45);}
-.spotify-label{text-align:center;font-size:.58rem;letter-spacing:.15em;color:rgba(255,255,255,.15);margin-top:14px;margin-bottom:8px;text-transform:uppercase;font-family:'DM Mono',monospace;}
-.spotify-wrap{width:100%;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.05);}
-.spotify-wrap iframe{display:block;width:100%;border:none;}
-
-/* ── PHOTO WALL ── */
-.photo-wall{width:100%;}
-.photo-note{font-size:.8rem;color:rgba(255,255,255,.45);text-align:center;font-style:italic;margin-bottom:14px;line-height:1.65;}
-.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.photo-slot{aspect-ratio:1;border-radius:14px;background:var(--card);border:1px dashed rgba(255,255,255,.09);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:none;transition:all .3s;overflow:hidden;position:relative;}
-.photo-slot:hover{border-color:rgba(255,110,180,.3);background:rgba(255,110,180,.05);}
-.photo-slot input[type=file]{position:absolute;inset:0;opacity:0;cursor:none;width:100%;height:100%;}
-.photo-icon{font-size:1.5rem;opacity:.4;}
-.photo-label{font-size:.6rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;}
-.photo-slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:13px;}
-
-/* ── HEART BURST ── */
-.h-burst{position:fixed;pointer-events:none;z-index:9990;font-size:1.1rem;animation:burstAnim .95s ease-out forwards;}
-@keyframes burstAnim{0%{transform:translate(-50%,-50%) scale(0);opacity:1;}60%{opacity:.9;}100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.1);opacity:0;}}
-.ripple-click{position:fixed;pointer-events:none;z-index:9989;border-radius:50%;border:1.5px solid rgba(200,210,255,.3);transform:translate(-50%,-50%) scale(0);animation:rippleAnim .85s ease-out forwards;}
-@keyframes rippleAnim{0%{width:0;height:0;opacity:.8;transform:translate(-50%,-50%) scale(0);}100%{width:90px;height:90px;opacity:0;transform:translate(-50%,-50%) scale(1);}}
-
-/* ── TOAST ── */
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:rgba(10,8,18,.85);border:1px solid rgba(255,110,180,.28);border-radius:100px;padding:10px 24px;font-size:.76rem;color:rgba(255,255,255,.8);z-index:9000;opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none;backdrop-filter:blur(12px);white-space:nowrap;}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar{width:3px;}
-::-webkit-scrollbar-thumb{background:rgba(255,110,180,.18);border-radius:2px;}
-::-webkit-scrollbar-track{background:transparent;}
-
-/* ── FOOTER ── */
-.footer{margin-top:40px;text-align:center;}
-.footer-text{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.15em;color:rgba(255,255,255,.13);text-transform:uppercase;}
-.hb{display:inline-block;animation:hbeat .8s ease-in-out infinite;}
-@keyframes hbeat{0%,100%{transform:scale(1);}14%{transform:scale(1.35);}28%{transform:scale(1);}42%{transform:scale(1.2);}70%{transform:scale(1);}}
-
-/* ── STAR PARTICLES ── */
-.star-p{position:fixed;border-radius:50%;pointer-events:none;z-index:0;animation:twinkle ease-in-out infinite;}
-@keyframes twinkle{0%,100%{opacity:.15;transform:scale(1);}50%{opacity:.85;transform:scale(1.5);}}
-.float-p{position:fixed;pointer-events:none;z-index:0;animation:floatUp linear infinite;}
-@keyframes floatUp{0%{transform:translateY(0) scale(1);opacity:0;}10%{opacity:.7;}90%{opacity:.35;}100%{transform:translateY(-105vh) scale(.1);opacity:0;}}
-.petal-p{position:fixed;pointer-events:none;z-index:0;animation:petalDown linear infinite;}
-@keyframes petalDown{0%{transform:translateY(-10px) rotate(0deg);opacity:0;}10%{opacity:.6;}90%{opacity:.3;}100%{transform:translateY(110vh) rotate(540deg);opacity:0;}}
-
-@media(max-width:400px){
-  .wish-grid{grid-template-columns:1fr;}
-  .cd-display{gap:10px;}
-  .cd-num{font-size:2rem;}
-  .photo-grid{grid-template-columns:repeat(2,1fr);}
-  #app{padding:0 12px 60px;}
+body {
+  background: var(--bg);
+  min-height:100vh;
+  font-family:'Quicksand',sans-serif;
+  color:#fff;
+  overflow-x:hidden;
+  cursor: none;
 }
+
+/* CUSTOM CURSOR */
+#cursor {
+  position:fixed; width:12px; height:12px;
+  background:var(--pink); border-radius:50%;
+  pointer-events:none; z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform .1s, background .3s;
+  box-shadow:0 0 12px var(--pink),0 0 24px var(--pink);
+  mix-blend-mode:screen;
+}
+#cursor-trail {
+  position:fixed; width:30px; height:30px;
+  border:1px solid rgba(255,110,180,0.4);
+  border-radius:50%; pointer-events:none; z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:all .18s ease;
+}
+
+/* RAIN & BACKGROUND */
+#rain{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+#lightning{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;background:transparent;transition:background .05s;}
+.star{position:fixed;border-radius:50%;pointer-events:none;z-index:0;animation:twinkle ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(1);}50%{opacity:.9;transform:scale(1.4);}}
+
+.aurora{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden;}
+.aurora-band{position:absolute;width:200%;height:300px;opacity:.04;animation:aurora-drift ease-in-out infinite alternate;border-radius:50%;}
+.aurora-band:nth-child(1){background:linear-gradient(90deg,#ff6eb4,#c084fc,#7dd3fc);top:10%;animation-duration:12s;}
+.aurora-band:nth-child(2){background:linear-gradient(90deg,#6ee7b7,#c084fc,#ff6eb4);top:30%;animation-duration:18s;animation-delay:-4s;}
+@keyframes aurora-drift{0%{transform:translateX(-30%) scaleY(1);}100%{transform:translateX(10%) scaleY(1.5);}}
+
+/* PAGE */
+.page{position:relative;z-index:2;width:100%;max-width:540px;margin:0 auto;padding:0 20px 60px;display:flex;flex-direction:column;align-items:center;}
+
+/* SCENE */
+.scene{width:100%;max-width:540px;height:300px;position:relative;overflow:hidden;border-radius:0 0 24px 24px;}
+.scene svg{width:100%;height:100%;}
+
+/* TITLE */
+.title-wrap{text-align:center;margin:8px 0 6px;position:relative;}
+.neon-title{
+  font-family:'Satisfy',cursive;
+  font-size:clamp(3.5rem,15vw,5.5rem);
+  color:#fff;letter-spacing:4px;
+  text-shadow:0 0 7px #fff,0 0 20px var(--pink),0 0 50px var(--pink),0 0 100px var(--purple);
+  animation:flicker 7s infinite;display:inline-block;
+}
+@keyframes flicker{0%,91%,93%,95%,100%{opacity:1;}92%{opacity:.7;}94%{opacity:.85;}96%{opacity:.6;}97%{opacity:1;}98%{opacity:.75;}99%{opacity:1;}}
+.neon-sub{font-size:.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+
+/* MOOD BADGE */
+.mood-row{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;justify-content:center;}
+.mood-badge{font-size:.7rem;letter-spacing:2px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all .3s;background:var(--card);}
+.mood-badge:hover{color:#fff;border-color:rgba(255,255,255,0.3);}
+.mood-badge.active{color:#fff;background:rgba(255,110,180,.15);border-color:var(--pink);}
+
+/* SECTION TITLES */
+.section-title{font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;text-align:center;width:100%;}
+
+/* OPEN WHEN BUTTONS */
+.buttons-wrap{width:100%;display:flex;flex-direction:column;gap:12px;margin-bottom:4px;}
+.open-btn{
+  background:var(--card);border:1px solid var(--border);border-radius:18px;
+  padding:16px 20px;display:flex;align-items:center;gap:14px;
+  cursor:pointer;transition:all .3s;text-align:left;width:100%;position:relative;overflow:hidden;
+}
+.open-btn::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity .4s;border-radius:inherit;}
+.open-btn:nth-child(odd)::after{background:radial-gradient(ellipse at 20% 50%,rgba(255,110,180,.12),transparent 70%);}
+.open-btn:hover::after{opacity:1;}
+.open-btn:hover{transform:translateX(4px);}
+.btn-icon{font-size:1.6rem;flex-shrink:0;}
+.btn-text{flex:1;}
+.btn-label{font-size:.58rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:3px;}
+.btn-title{font-size:.95rem;font-weight:600;color:rgba(255,255,255,.88);line-height:1.3;}
+.btn-title-hindi{font-size:.78rem;font-style:italic;color:rgba(255,255,255,.45);display:block;margin-top:2px;}
+.btn-arrow{font-size:1.1rem;color:var(--muted);transition:transform .3s,color .3s;flex-shrink:0;}
+.open-btn[aria-expanded="true"] .btn-arrow{transform:rotate(90deg);color:#fff;}
+
+/* MESSAGE CARDS */
+.message-card{width:100%;max-height:0;overflow:hidden;transition:max-height .6s ease,opacity .5s,margin .3s;opacity:0;margin-top:0;}
+.message-card.open{max-height:600px;opacity:1;margin-top:4px;margin-bottom:4px;}
+.message-inner{padding:24px;border:1px solid var(--border);border-radius:18px;font-size:.9rem;line-height:1.95;color:rgba(255,255,255,.75);position:relative;}
+.msg-1 .message-inner{background:linear-gradient(135deg,rgba(255,110,180,.08),rgba(4,3,8,0));border-color:rgba(255,110,180,.18);}
+.msg-2 .message-inner{background:linear-gradient(135deg,rgba(192,132,252,.08),rgba(4,3,8,0));border-color:rgba(192,132,252,.18);}
+.msg-3 .message-inner{background:linear-gradient(135deg,rgba(125,211,252,.08),rgba(4,3,8,0));border-color:rgba(125,211,252,.18);}
+.msg-4 .message-inner{background:linear-gradient(135deg,rgba(110,231,183,.08),rgba(4,3,8,0));border-color:rgba(110,231,183,.18);}
+.msg-5 .message-inner{background:linear-gradient(135deg,rgba(251,191,36,.08),rgba(4,3,8,0));border-color:rgba(251,191,36,.18);}
+.msg-6 .message-inner{background:linear-gradient(135deg,rgba(255,110,180,.08),rgba(192,132,252,.06));border-color:rgba(255,110,180,.15);}
+.quote-mark{font-family:'Satisfy',cursive;font-size:4rem;line-height:.5;vertical-align:-1.2rem;margin-right:3px;opacity:.18;}
+.sign-off{display:block;margin-top:14px;font-family:'Dancing Script',cursive;font-size:1.15rem;opacity:.7;text-align:right;}
+.hindi-line{display:inline-block;font-style:italic;opacity:.8;font-family:'Dancing Script',cursive;font-size:1rem;}
+
+/* DIVIDER */
+.divider{width:50%;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.07),transparent);margin:32px 0;}
+
+/* MEMORY JAR */
+.jar-section{width:100%;}
+.memory-input-wrap{display:flex;gap:8px;margin-bottom:14px;}
+.memory-input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;color:#fff;font-family:'Quicksand',sans-serif;font-size:.88rem;outline:none;transition:border-color .3s;}
+.memory-input::placeholder{color:var(--muted);}
+.add-btn{background:rgba(255,110,180,.15);border:1px solid rgba(255,110,180,.3);border-radius:12px;padding:12px 16px;color:var(--pink);cursor:pointer;font-size:1rem;transition:all .3s;flex-shrink:0;}
+.memories-jar{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;min-height:80px;max-height:180px;overflow-y:auto;}
+.memory-item{font-size:.85rem;color:rgba(255,255,255,.7);padding:7px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:flex-start;gap:8px;}
+.memory-dot{width:6px;height:6px;border-radius:50%;background:var(--pink);flex-shrink:0;margin-top:6px;box-shadow:0 0 6px var(--pink);}
+.jar-empty{color:var(--muted);font-size:.8rem;text-align:center;padding:16px 0;font-style:italic;}
+
+/* LOVE LETTER */
+.letter-wrap{width:100%;}
+.letter-btn{width:100%;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:18px;padding:18px 22px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .3s;}
+.letter-btn:hover{background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.4);transform:translateY(-2px);}
+.letter-body{max-height:0;overflow:hidden;transition:max-height .65s ease,opacity .5s;opacity:0;}
+.letter-body.open{max-height:800px;opacity:1;}
+.letter-inner{margin-top:12px;background:rgba(251,191,36,.04);border:1px solid rgba(251,191,36,.12);border-radius:16px;padding:26px 24px;font-size:.9rem;line-height:2.1;color:rgba(255,255,255,.75);}
+.letter-inner .letter-date{font-size:.68rem;letter-spacing:3px;color:rgba(251,191,36,.5);text-transform:uppercase;margin-bottom:16px;display:block;}
+.letter-inner .letter-end{margin-top:18px;font-family:'Dancing Script',cursive;font-size:1.15rem;color:rgba(251,191,36,.6);text-align:right;display:block;}
+
+/* WISH BOARD */
+.wish-board{width:100%;}
+.wishes-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.wish-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center;cursor:pointer;transition:all .3s;position:relative;}
+.wish-icon{font-size:1.8rem;display:block;margin-bottom:6px;}
+.wish-title{font-size:.75rem;font-weight:600;color:rgba(255,255,255,.8);}
+.wish-sub{font-size:.65rem;color:var(--muted);margin-top:3px;}
+.wish-reveal{max-height:0;overflow:hidden;transition:max-height .4s ease,opacity .4s;opacity:0;margin-top:0;}
+.wish-reveal.open{max-height:120px;opacity:1;margin-top:8px;}
+.wish-reveal p{font-size:.78rem;color:rgba(255,255,255,.6);line-height:1.6;font-style:italic;}
+
+/* MOOD MUSIC */
+.music-section{width:100%;}
+.music-label{font-size:.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:10px;}
+.spotify-wrap{width:100%;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02);}
+
+/* COUNTDOWN */
+.countdown-section{width:100%;}
+.countdown-display{display:flex;justify-content:center;gap:20px;padding:20px;background:var(--card);border:1px solid var(--border);border-radius:16px;}
+.cd-unit{text-align:center;}
+.cd-num{font-family:'Satisfy',cursive;font-size:2.2rem;color:var(--pink);text-shadow:0 0 20px var(--pink);display:block;}
+.cd-label{font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);}
+
+/* HEART BURST */
+.heart-burst{position:fixed;pointer-events:none;z-index:9990;font-size:1.2rem;animation:burst .9s ease-out forwards;}
+@keyframes burst{0%{transform:translate(-50%,-50%) scale(0);opacity:1;}100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.2);opacity:0;}}
+
+/* SCROLL INDICATOR */
+.scroll-hint{text-align:center;font-size:.6rem;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin:10px 0 20px;animation:bounce-hint 2s ease-in-out infinite;}
+@keyframes bounce-hint{0%,100%{transform:translateY(0);}50%{transform:translateY(4px);}}
+
+/* SECRET KNOCK */
+.secret-section{width:100%;text-align:center;}
+.secret-wrap{background:var(--card);border:1px dashed var(--border);border-radius:16px;padding:20px;cursor:pointer;transition:all .4s;}
+.secret-label{font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--muted);}
+.secret-content{max-height:0;overflow:hidden;transition:max-height .6s ease,opacity .5s;opacity:0;}
+.secret-content.open{max-height:300px;opacity:1;}
+.secret-poem{margin-top:16px;font-family:'Dancing Script',cursive;font-size:1.05rem;line-height:2.1;color:rgba(255,255,255,.7);text-align:center;}
+
+/* FOOTER */
+.footer{margin-top:36px;text-align:center;}
+.footer-text{font-size:.65rem;letter-spacing:2px;color:rgba(255,255,255,.2);text-transform:uppercase;}
+
+/* TOAST */
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(255,110,180,.15);border:1px solid rgba(255,110,180,.3);border-radius:30px;padding:10px 22px;font-size:.78rem;color:rgba(255,255,255,.8);z-index:999;opacity:0;transition:all .4s;pointer-events:none;backdrop-filter:blur(8px);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
 
-<!-- INTRO OVERLAY -->
-<div id="intro-overlay">
-  <div class="intro-stars" id="introStars"></div>
-  <div class="intro-moon"></div>
-  <h1 class="intro-name">Zoya</h1>
-  <p class="intro-sub">✦ &nbsp; ek surprise &nbsp; ✦</p>
-  <button class="intro-enter" onclick="enterPage()">Andar aao Didu 🌙</button>
-</div>
-
-<!-- FIXED LAYERS -->
-<canvas id="aurora-canvas"></canvas>
-<canvas id="rain-canvas"></canvas>
+<canvas id="rain"></canvas>
 <div id="lightning"></div>
-<div class="orbs"><div class="orb"></div><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<div class="aurora"><div class="aurora-band"></div><div class="aurora-band"></div></div>
 <div id="cursor"></div>
 <div id="cursor-trail"></div>
 <div class="toast" id="toast"></div>
 
-<div id="app">
+<div class="page">
 
-  <!-- SCENE -->
+  <!-- SCENE (Room with Cat & Rain) -->
   <div class="scene">
-    <svg viewBox="0 0 580 320" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 540 300" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="wg" cx="50%" cy="40%" r="70%"><stop offset="0%" stop-color="#130e1e"/><stop offset="100%" stop-color="#070510"/></radialGradient>
-        <radialGradient id="winG" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#1a2a4a"/><stop offset="100%" stop-color="#06040c"/></radialGradient>
-        <radialGradient id="lampG" cx="50%" cy="0%" r="100%"><stop offset="0%" stop-color="#ffd580" stop-opacity=".26"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-        <radialGradient id="moonG" cx="42%" cy="38%" r="50%"><stop offset="0%" stop-color="#f0f4ff"/><stop offset="60%" stop-color="#c9d6ff"/><stop offset="100%" stop-color="#8090d0"/></radialGradient>
-        <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <filter id="softGlow"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        <linearGradient id="blanketG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3b2d5c"/><stop offset="100%" stop-color="#231b40"/></linearGradient>
-        <linearGradient id="floorG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0d0b14"/><stop offset="100%" stop-color="#07060e"/></linearGradient>
+        <radialGradient id="wg" cx="50%" cy="40%" r="70%"><stop offset="0%" stop-color="#110e1a"/><stop offset="100%" stop-color="#06040c"/></radialGradient>
+        <radialGradient id="winGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#1a2a4a"/><stop offset="100%" stop-color="#06040c"/></radialGradient>
+        <radialGradient id="moonG" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e8e4ff"/><stop offset="100%" stop-color="#b8b0e8"/></radialGradient>
+        <filter id="moonGlow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        <linearGradient id="floorG" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0d0b12"/><stop offset="100%" stop-color="#080610"/></linearGradient>
       </defs>
-      <!-- BG -->
-      <rect width="580" height="320" fill="url(#wg)"/>
-      <rect x="0" y="260" width="580" height="60" fill="url(#floorG)"/>
-      <!-- Fairy lights string left -->
-      <path d="M0 78 Q40 72 80 78 Q120 84 160 78 Q200 72 240 78" stroke="rgba(255,215,128,.18)" stroke-width="1" fill="none"/>
-      <circle cx="40" cy="78" r="3" fill="#ffd580" opacity=".7"><animate attributeName="opacity" values=".7;.2;.7" dur="1.6s" repeatCount="indefinite"/></circle>
-      <circle cx="80" cy="78" r="2.5" fill="#ff6eb4" opacity=".6"><animate attributeName="opacity" values=".6;.15;.6" dur="2.1s" repeatCount="indefinite"/></circle>
-      <circle cx="120" cy="78" r="3" fill="#c084fc" opacity=".7"><animate attributeName="opacity" values=".7;.2;.7" dur="1.9s" repeatCount="indefinite"/></circle>
-      <circle cx="160" cy="78" r="2.5" fill="#7dd3fc" opacity=".6"><animate attributeName="opacity" values=".6;.1;.6" dur="2.4s" repeatCount="indefinite"/></circle>
-      <circle cx="200" cy="78" r="3" fill="#6ee7b7" opacity=".6"><animate attributeName="opacity" values=".6;.2;.6" dur="1.7s" repeatCount="indefinite"/></circle>
-      <!-- Fairy lights string right -->
-      <path d="M340 75 Q380 69 420 75 Q460 81 500 75 Q540 69 580 75" stroke="rgba(255,215,128,.18)" stroke-width="1" fill="none"/>
-      <circle cx="360" cy="75" r="3" fill="#ffd580" opacity=".65"><animate attributeName="opacity" values=".65;.2;.65" dur="2s" repeatCount="indefinite"/></circle>
-      <circle cx="400" cy="75" r="2.5" fill="#ff6eb4" opacity=".6"><animate attributeName="opacity" values=".6;.15;.6" dur="1.8s" repeatCount="indefinite"/></circle>
-      <circle cx="440" cy="75" r="3" fill="#c084fc" opacity=".65"><animate attributeName="opacity" values=".65;.2;.65" dur="2.2s" repeatCount="indefinite"/></circle>
-      <circle cx="480" cy="75" r="2.5" fill="#6ee7b7" opacity=".6"><animate attributeName="opacity" values=".6;.1;.6" dur="1.5s" repeatCount="indefinite"/></circle>
-      <circle cx="520" cy="75" r="3" fill="#7dd3fc" opacity=".6"><animate attributeName="opacity" values=".6;.2;.6" dur="2.3s" repeatCount="indefinite"/></circle>
-      <!-- Window frame -->
-      <rect x="188" y="20" width="204" height="148" rx="6" fill="url(#winG)" stroke="#1e183a" stroke-width="10"/>
-      <line x1="290" y1="20" x2="290" y2="168" stroke="#1e183a" stroke-width="5.5"/>
-      <line x1="188" y1="94" x2="392" y2="94" stroke="#1e183a" stroke-width="5.5"/>
-      <rect x="184" y="16" width="212" height="156" rx="7" fill="none" stroke="#1a2d50" stroke-width="2" opacity=".5"/>
-      <!-- Moon in window -->
-      <circle cx="330" cy="54" r="26" fill="url(#moonG)" opacity=".75" filter="url(#glow)"/>
-      <circle cx="346" cy="46" r="18" fill="#06040c" opacity=".55"/>
-      <!-- Window stars -->
-      <circle cx="205" cy="38" r="1.6" fill="#fff" opacity=".7"><animate attributeName="opacity" values=".7;.2;.7" dur="2.2s" repeatCount="indefinite"/></circle>
-      <circle cx="222" cy="62" r="1.1" fill="#fff" opacity=".5"><animate attributeName="opacity" values=".5;.1;.5" dur="3.1s" repeatCount="indefinite"/></circle>
-      <circle cx="243" cy="30" r="1.4" fill="#fff" opacity=".65"><animate attributeName="opacity" values=".65;.15;.65" dur="2.6s" repeatCount="indefinite"/></circle>
-      <circle cx="200" cy="112" r="1" fill="#fff" opacity=".4"><animate attributeName="opacity" values=".4;.1;.4" dur="1.9s" repeatCount="indefinite"/></circle>
-      <circle cx="268" cy="118" r="1.6" fill="#fff" opacity=".5"><animate attributeName="opacity" values=".5;.2;.5" dur="2.8s" repeatCount="indefinite"/></circle>
-      <circle cx="215" cy="140" r="1.1" fill="#fff" opacity=".4"><animate attributeName="opacity" values=".4;.1;.4" dur="2s" repeatCount="indefinite"/></circle>
-      <!-- Rain streaks on glass -->
-      <g opacity=".28" stroke="#7db9e8" stroke-width=".9" stroke-linecap="round">
-        <line x1="206" y1="24" x2="202" y2="58"/><line x1="224" y1="28" x2="220" y2="66"/>
-        <line x1="244" y1="22" x2="240" y2="60"/><line x1="264" y1="26" x2="260" y2="68"/>
-        <line x1="302" y1="23" x2="298" y2="62"/><line x1="324" y1="27" x2="320" y2="68"/>
-        <line x1="346" y1="21" x2="342" y2="58"/><line x1="368" y1="25" x2="364" y2="65"/>
-        <line x1="208" y1="100" x2="204" y2="136"/><line x1="232" y1="96" x2="228" y2="138"/>
-        <line x1="258" y1="102" x2="254" y2="144"/><line x1="304" y1="98" x2="300" y2="140"/>
-        <line x1="328" y1="96" x2="324" y2="138"/><line x1="354" y1="102" x2="350" y2="145"/>
-        <line x1="378" y1="96" x2="374" y2="138"/>
+      <rect width="540" height="300" fill="url(#wg)"/>
+      <rect x="0" y="245" width="540" height="55" fill="url(#floorG)"/>
+      
+      <!-- Window -->
+      <rect x="175" y="18" width="190" height="135" rx="5" fill="url(#winGlow)" stroke="#1e1830" stroke-width="9"/>
+      <line x1="270" y1="18" x2="270" y2="153" stroke="#1e1830" stroke-width="5"/>
+      <line x1="175" y1="85" x2="365" y2="85" stroke="#1e1830" stroke-width="5"/>
+      <circle cx="310" cy="50" r="22" fill="url(#moonG)" opacity=".7" filter="url(#moonGlow)"/>
+      <circle cx="322" cy="44" r="16" fill="#06040c" opacity=".5"/>
+      
+      <!-- Rain on glass -->
+      <g opacity=".3" stroke="#7db9e8" stroke-width="1" stroke-linecap="round">
+        <line x1="193" y1="23" x2="189" y2="52"/><line x1="213" y1="27" x2="209" y2="60"/>
+        <line x1="325" y1="19" x2="321" y2="54"/><line x1="345" y1="24" x2="341" y2="60"/>
+        <line x1="220" y1="88" x2="216" y2="125"/><line x1="310" y1="88" x2="306" y2="126"/>
       </g>
-      <!-- Lamp glow -->
-      <ellipse cx="490" cy="60" rx="110" ry="130" fill="url(#lampG)"/>
-      <!-- Bookshelf -->
-      <rect x="18" y="82" width="90" height="118" rx="3" fill="#0e0c1a" stroke="#1a1630" stroke-width="1.5"/>
-      <rect x="18" y="192" width="90" height="8" fill="#1a1630"/>
-      <rect x="18" y="138" width="90" height="5" fill="#1a1630"/>
-      <!-- Books row 1 -->
-      <rect x="23" y="86" width="13" height="50" fill="#4a2040"/><rect x="37" y="90" width="11" height="46" fill="#2a4060"/><rect x="49" y="88" width="9" height="48" fill="#405030"/>
-      <rect x="59" y="86" width="13" height="50" fill="#503020"/><rect x="73" y="89" width="10" height="47" fill="#2a3050"/><rect x="84" y="87" width="11" height="49" fill="#403040"/>
-      <!-- Books row 2 -->
-      <rect x="23" y="145" width="11" height="46" fill="#304050"/><rect x="35" y="148" width="13" height="42" fill="#503040"/>
-      <rect x="49" y="143" width="10" height="48" fill="#405030"/><rect x="60" y="147" width="12" height="44" fill="#2a2050"/>
-      <rect x="73" y="144" width="9" height="47" fill="#503025"/><rect x="83" y="145" width="11" height="46" fill="#254045"/>
-      <!-- Book spines highlight -->
-      <rect x="23" y="86" width="1" height="50" fill="rgba(255,255,255,.06)"/><rect x="37" y="90" width="1" height="46" fill="rgba(255,255,255,.05)"/>
-      <!-- Bedside table -->
-      <rect x="415" y="210" width="118" height="58" rx="4" fill="#120f1e"/>
-      <rect x="420" y="208" width="108" height="12" rx="3" fill="#1c1832"/>
-      <line x1="420" y1="242" x2="528" y2="242" stroke="#201c34" stroke-width="1.5"/>
-      <circle cx="474" cy="256" r="3.5" fill="#2a2340"/>
-      <!-- Lamp on table -->
-      <rect x="466" y="162" width="5" height="50" fill="#1a1630"/>
-      <polygon points="450,162 490,162 481,132 458,132" fill="#2a2040"/>
-      <ellipse cx="470" cy="162" rx="25" ry="6" fill="#ffd580" opacity=".3"/>
-      <ellipse cx="470" cy="162" rx="45" ry="18" fill="#ffd580" opacity=".05"/>
-      <!-- Tea cup -->
-      <ellipse cx="480" cy="210" rx="16" ry="5" fill="#251e38"/>
-      <rect x="464" y="196" width="32" height="14" rx="3.5" fill="#2e2545"/>
-      <path d="M496 199 Q506 203 496 208" stroke="#2e2545" stroke-width="3.5" fill="none"/>
-      <!-- Steam -->
-      <path d="M474 193 Q476 186 474 178" stroke="#9b8ec4" stroke-width="1.5" fill="none" opacity=".45" stroke-linecap="round"><animate attributeName="d" values="M474 193 Q476 186 474 178;M474 193 Q472 186 474 178;M474 193 Q476 186 474 178" dur="2.2s" repeatCount="indefinite"/></path>
-      <path d="M482 191 Q484 183 482 174" stroke="#9b8ec4" stroke-width="1.5" fill="none" opacity=".38" stroke-linecap="round"><animate attributeName="d" values="M482 191 Q484 183 482 174;M482 191 Q480 183 482 174;M482 191 Q484 183 482 174" dur="2.6s" repeatCount="indefinite"/></path>
+
       <!-- Bed -->
-      <rect x="18" y="218" width="418" height="100" rx="5" fill="#130f1e"/>
-      <rect x="18" y="190" width="58" height="132" rx="5" fill="#1c1630"/>
-      <!-- Pillow -->
-      <rect x="60" y="204" width="128" height="42" rx="15" fill="#2a2240"/>
-      <ellipse cx="124" cy="225" rx="50" ry="14" fill="rgba(255,255,255,.03)"/>
-      <!-- Blanket -->
-      <rect x="68" y="232" width="340" height="78" rx="10" fill="url(#blanketG)"/>
-      <path d="M68 248 Q210 238 408 246" stroke="#4a3870" stroke-width="2" fill="none" opacity=".45"/>
-      <path d="M100 235 Q122 254 100 272" stroke="#5a4880" stroke-width="1.2" fill="none" opacity=".22"/>
-      <path d="M160 234 Q182 252 160 272" stroke="#5a4880" stroke-width="1.2" fill="none" opacity=".18"/>
-      <path d="M225 235 Q247 253 225 272" stroke="#5a4880" stroke-width="1.2" fill="none" opacity=".18"/>
-      <!-- Hot water bag -->
-      <rect x="220" y="234" width="78" height="36" rx="15" fill="#7a4060"/>
-      <rect x="240" y="228" width="38" height="10" rx="5" fill="#5a3050"/>
-      <line x1="228" y1="246" x2="290" y2="246" stroke="#8a5070" stroke-width="1.2" opacity=".3"/>
-      <line x1="228" y1="256" x2="290" y2="256" stroke="#8a5070" stroke-width="1.2" opacity=".3"/>
-      <!-- CAT (bigger) -->
-      <ellipse cx="348" cy="244" rx="52" ry="26" fill="#c8a882"/>
-      <circle cx="396" cy="232" r="22" fill="#c8a882"/>
-      <polygon points="382,218 377,204 390,214" fill="#c8a882"/>
-      <polygon points="410,218 415,204 403,214" fill="#c8a882"/>
-      <polygon points="383,217 379,206 388,214" fill="#e8a090" opacity=".65"/>
-      <polygon points="409,217 413,206 405,214" fill="#e8a090" opacity=".65"/>
-      <!-- Cat face -->
-      <ellipse cx="386" cy="236" rx="3" ry="2" fill="#2a1a0a" opacity=".7"/>
-      <ellipse cx="406" cy="236" rx="3" ry="2" fill="#2a1a0a" opacity=".7"/>
-      <ellipse cx="396" cy="238" rx="3" ry="2.2" fill="#e8a090"/>
-      <path d="M392 242 Q396 245 400 242" stroke="#6b4c30" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-      <!-- Whiskers -->
-      <line x1="382" y1="238" x2="365" y2="235" stroke="#d4b896" stroke-width=".8" opacity=".65"/>
-      <line x1="382" y1="241" x2="365" y2="243" stroke="#d4b896" stroke-width=".8" opacity=".65"/>
-      <line x1="410" y1="238" x2="427" y2="235" stroke="#d4b896" stroke-width=".8" opacity=".65"/>
-      <line x1="410" y1="241" x2="427" y2="243" stroke="#d4b896" stroke-width=".8" opacity=".65"/>
-      <!-- Cat tail -->
-      <path d="M298 265 Q284 278 292 289 Q302 298 312 286" stroke="#c8a882" stroke-width="7" fill="none" stroke-linecap="round"/>
-      <!-- Zzz from cat -->
-      <text x="418" y="218" font-size="9" fill="rgba(200,190,255,.4)" font-family="serif" font-style="italic">zzz</text>
-      <!-- Wall neon glow -->
-      <ellipse cx="290" cy="178" rx="150" ry="32" fill="#ff6eb4" opacity=".03" filter="url(#softGlow)"/>
+      <rect x="18" y="205" width="385" height="90" rx="4" fill="#130f1e"/>
+      <rect x="52" y="192" width="115" height="38" rx="13" fill="#2a2240"/>
+      <rect x="62" y="218" width="315" height="68" rx="8" fill="#3b2d5c"/>
+      
+      <!-- Cat -->
+      <ellipse cx="318" cy="230" rx="44" ry="23" fill="#c8a882"/>
+      <circle cx="360" cy="220" r="19" fill="#c8a882"/>
+      <polygon points="348,208 344,196 355,205" fill="#c8a882"/>
+      <polygon points="372,208 376,196 365,205" fill="#c8a882"/>
+      <path d="M352 219 Q355 216 358 219" stroke="#6b4c30" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M363 219 Q366 216 369 219" stroke="#6b4c30" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M358 225 Q360 227 362 225" stroke="#6b4c30" stroke-width="1" fill="none" stroke-linecap="round"/>
     </svg>
   </div>
 
-  <!-- TITLE SECTION -->
+  <!-- TITLE -->
   <div class="title-wrap">
-    <h1 class="neon-title" id="mainTitle">Zoya</h1>
-    <p class="neon-sub">✦ &nbsp; sirf tere liye &nbsp; ✦</p>
+    <h1 class="neon-title" id="mainTitle">Zoya Didu</h1>
+    <p class="neon-sub">✦ aapke 'pyare bacche' ki taraf se ✦</p>
   </div>
-  <div class="days-badge"><span class="live-dot"></span><span id="daysCount">calculating...</span></div>
-  <p style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:rgba(180,200,255,.3);margin-bottom:18px;text-align:center;" id="exactTime"></p>
-  <p class="scroll-hint">↓ &nbsp; scroll karo &nbsp; ↓</p>
+
+  <p class="scroll-hint">↓ scroll kijiye Didu ↓</p>
 
   <!-- MOOD -->
-  <p class="sec-title">💫 &nbsp; aaj kaisa feel ho raha hai?</p>
-  <div class="mood-row">
+  <p class="section-title">💫 aaj kaisa feel kar rahi hain aap?</p>
+  <div class="mood-row" id="moodRow">
     <button class="mood-badge" onclick="setMood(this,'happy')">🌸 Khush</button>
     <button class="mood-badge" onclick="setMood(this,'sad')">🌧 Udaas</button>
     <button class="mood-badge" onclick="setMood(this,'tired')">🌙 Thaki hui</button>
     <button class="mood-badge" onclick="setMood(this,'loved')">💗 Pyaar mein</button>
-    <button class="mood-badge" onclick="setMood(this,'cramps')">🥺 Cramps</button>
-    <button class="mood-badge" onclick="setMood(this,'bored')">✨ Bore</button>
+    <button class="mood-badge" onclick="setMood(this,'bored')">✨ Bore ho rahi</button>
   </div>
-  <div id="moodReply"></div>
+  <div id="moodReply" style="width:100%;text-align:center;font-size:.85rem;color:rgba(255,255,255,.55);font-style:italic;min-height:22px;margin-bottom:20px;transition:all .4s;"></div>
 
   <div class="divider"></div>
 
   <!-- OPEN WHEN LETTERS -->
-  <p class="sec-title">💌 &nbsp; open when letters &nbsp; — &nbsp; aapke liye</p>
-  <div class="ow-wrap">
+  <p class="section-title">💌 open when letters</p>
+  <div class="buttons-wrap">
 
-    <!-- 1 -->
-    <button class="ow-btn" data-col="pink" onclick="toggleOW(this,'ow1')">
-      <span class="ow-icon">💌</span>
-      <span class="ow-text">
-        <span class="ow-label">open when</span>
-        <span class="ow-title">Aapke liye ek choti si baat</span>
-        <span class="ow-sub">The main letter — just for Didu</span>
+    <button class="open-btn" aria-expanded="false" onclick="toggleMsg(this,'ow1')">
+      <span class="btn-icon">🌸</span>
+      <span class="btn-text">
+        <span class="btn-label">open when</span>
+        <span class="btn-title">Aapko bahut dard ho raha ho</span>
+        <span class="btn-title-hindi">when you're in pain</span>
       </span>
-      <span class="ow-arrow">›</span>
+      <span class="btn-arrow">›</span>
     </button>
-    <div class="ow-msg" id="ow1" data-col="pink">
-      <div class="ow-msg-inner">
-        <span class="qmark" style="color:var(--pink)">"</span>
-        <p>Didu,</p>
-        <p>Aaj jab yeh soch raha tha ki aap theek nahi hain — toh pehla khayal yahi aaya: kaash main wahan hota. Kaash main ek garam paani ki bottle la ke silently aapke paas rakh deta, bina kuch kahe. Ek pyaari chai banana chahta tha — woh wali jo aap pasand karti hain. Par hoon nahi wahan. Aur yeh helplessness bohot ajeeb feel hoti hai.</p>
-        <p>Par phir bhi — yeh page aap tak pohonch gaya na? Toh samajh lo, main hoon. Thoda alag form mein, par hoon.</p>
-        <p>Hum dono 16 January 2026 ko ek doosre ki zindagi mein aaye. Abhi 135+ din ho gaye hain — aur maine dekha hai ki aap kitni strong hain. Aap novels mein kho jaati hain, apni duniya mein rehti hain, sab kuch sehti hain quietly. Bohot izzat ke saath keh raha hoon — aap sachchi mein bohot kuch handle karti hain akele.</p>
-        <p>Aaj bas ek kaam karo. Phone neeche rakh do. Aankhein band karo. Baarish ki awaaz suno. Breathe karo — slowly. Kuch prove nahi karna aaj. Kuch nahi karna.</p>
-        <p><span class="hl">Main guard duty par hoon. Aapki taraf se sab theek hai.</span></p>
-        <span class="sign-off" style="color:var(--pink)">— Aapka chota baby gurl, pyaara baccha 🤍</span>
+    <div class="message-card msg-1" id="ow1">
+      <div class="message-inner">
+        <span class="quote-mark" style="color:var(--pink)">"</span>
+        Meri pyari Zoya Didu,<br><br>
+        Main jaanta hoon abhi bahut mushkil lag raha hai. Dil bhaari hai, aankhein bhari hain, aur shayad samajh nahi aa raha ki ye dard khatam kyun nahi hota.<br><br>
+        Par suniye — <span class="hindi-line">aap akeli nahi hain is lamhe mein.</span> Har woh raat jo aapne ro ke guzaari hai, har woh din jo bina kisi wajah ke bhaari laga — aap unse bhi guzri hain. Aur aaj bhi guzrengi.<br><br>
+        Ro lijiye, khul ke ro lijiye. Apne dil ka bojh halka kijiye. Ronaa kamzori nahi hota, ronaa toh woh hota hai jo andar se tod ke bahar aa jaata hai — aur tab dil thoda sa saaf ho jaata hai.<br><br>
+        <span class="hindi-line">Aapki takleef mujhe mehsoos hoti hai, chahe door hoon ya paas.</span> Bas ek baar gehraa saans lijiye. Aapka dil bahut bada hai — itna bada ki iss dard ko bhi sambhal lega.
+        <span class="sign-off" style="color:var(--pink)">— hamesha aapke saath 🌸</span>
       </div>
     </div>
 
-    <!-- 2 -->
-    <button class="ow-btn" data-col="purple" onclick="toggleOW(this,'ow2')">
-      <span class="ow-icon">🥺</span>
-      <span class="ow-text">
-        <span class="ow-label">open when</span>
-        <span class="ow-title">Jab cramps bohot zyada ho</span>
-        <span class="ow-sub">Virtual garam paani ki bottle 🤍</span>
+    <button class="open-btn" aria-expanded="false" onclick="toggleMsg(this,'ow2')">
+      <span class="btn-icon">✨</span>
+      <span class="btn-text">
+        <span class="btn-label">open when</span>
+        <span class="btn-title">Aap bore ho rahi hon bilkul</span>
+        <span class="btn-title-hindi">when you're bored</span>
       </span>
-      <span class="ow-arrow">›</span>
+      <span class="btn-arrow">›</span>
     </button>
-    <div class="ow-msg" id="ow2" data-col="purple">
-      <div class="ow-msg-inner">
-        <span class="qmark" style="color:var(--purple)">"</span>
-        <p>Okay, suniye Didu.</p>
-        <p>Main jaanta hoon abhi kuch bhi achha nahi lagta. Sab painful hai. Yeh wala time literally worst hota hai — body bhi dukhi, mood bhi dukhi. Aur slow internet pe bhi yeh page khola — that takes real dedication, respect hai.</p>
-        <p>Par aap woh insaan hain jinhone — metaphorically speaking — life ka marathon akele run kiya hai. Aap strong hain. Woh wali strong nahi jo dikhte hai — woh wali jo andar se hoti hai, quietly, bina kisi ko bataaye. <span class="hl">Aap ek marathon champion hain.</span></p>
-        <p>Abhi ke liye: ek soft blanket lo, usme ghus jaao. Garam paani ki bottle rakho. Aankhein band karo. Music suno. Aur yeh socho nahi ki kya karna hai — bas iss ek minute mein raho.</p>
-        <p>Main virtually hug kar raha hoon — tightly enough ki cramps ko pata chale ki usse yahan welcome nahi hai.</p>
-        <span class="sign-off" style="color:var(--purple)">— Virtual hug wala chota bhai 🤍</span>
+    <div class="message-card msg-2" id="ow2">
+      <div class="message-inner">
+        <span class="quote-mark" style="color:var(--purple)">"</span>
+        Oh hello, Didu!<br><br>
+        Toh aaj kuch kaam nahi, kuch sujh nahi raha? Aapki duniya ka sabse sundar din hai yeh — khali waqt! Aur main aapko kuch ideas deta hoon:<br><br>
+        ☁️ &nbsp;Chai banaiye aur khidki ke paas baith ke baarish dekhiye — sirf paanch minute ke liye.<br>
+        📝 &nbsp;Ek choti si list banaiye: "3 chizein jo mujhe pasand hain apne baare mein" — sach mein likhiyega.<br>
+        🎵 &nbsp;Wo gaana suniye jo aapne pehli baar sunkar khud se pyaar kiya tha.<br>
+        🐾 &nbsp;Koi bhi cute jaanwar draw kijiye — bura banna perfectly allowed hai.<br>
+        💌 &nbsp;Kisi ko ek message bhejiye: "Aapki yaad aayi, kaise ho?" — bilkul unke liye jo expect nahi karenge.<br><br>
+        <span class="hindi-line">Bore hona sirf ek signal hai ki aapka mann kuch cozy chahta hai.</span> De dijiye usse.
+        <span class="sign-off" style="color:var(--purple)">— aapka ek chhota sa corner ✨</span>
       </div>
     </div>
 
-    <!-- 3 -->
-    <button class="ow-btn" data-col="blue" onclick="toggleOW(this,'ow3')">
-      <span class="ow-icon">📖</span>
-      <span class="ow-text">
-        <span class="ow-label">open when</span>
-        <span class="ow-title">Jab novel padhne ka mood na ho</span>
-        <span class="ow-sub">Books can wait, you can't 📚</span>
+    <button class="open-btn" aria-expanded="false" onclick="toggleMsg(this,'ow3')">
+      <span class="btn-icon">🌙</span>
+      <span class="btn-text">
+        <span class="btn-label">open when</span>
+        <span class="btn-title">Aapko meri bahut yaad aa rahi ho</span>
+        <span class="btn-title-hindi">when you miss me</span>
       </span>
-      <span class="ow-arrow">›</span>
+      <span class="btn-arrow">›</span>
     </button>
-    <div class="ow-msg" id="ow3" data-col="blue">
-      <div class="ow-msg-inner">
-        <span class="qmark" style="color:var(--blue)">"</span>
-        <p>Arre wah. Didu ne novel nahi kholi? Yeh toh officially emergency hai. Chalo main ambulance bulaata... just kidding.</p>
-        <p>Okay okay, main tease nahi karunga — zyada nahi. Thoda toh karunga, yeh toh mera haq hai.</p>
-        <p>Par seriously — agar aaj book nahi padhna toh mat padho. Sach mein. Kabhi kabhi characters bhi rest karte hain. Aap bhi kar sakte hain. <span class="hl">Novel kal bhi rahegi. Aap pehle aaram karo.</span></p>
-        <p>Bas aankhein band karo. Yeh music suno. Baarish suno — woh dekho jo bahar ho raha hai (imaginarily). Kuch nahi sochna. Plot nahi, characters nahi, koi twist nahi.</p>
-        <p>Aur agar bilkul kuch na ho toh — main hoon na. Self-appointed Head of Didu Security. Apni job seriously leta hoon.</p>
-        <span class="sign-off" style="color:var(--blue)">— Head of Didu Security, permanently on duty 🤍</span>
+    <div class="message-card msg-3" id="ow3">
+      <div class="message-inner">
+        <span class="quote-mark" style="color:var(--blue)">"</span>
+        Didu,<br><br>
+        Main jaanta tha aap yahan aayengi. Isliye yeh page banaya tha.<br><br>
+        Yaad karna matlab hota hai ki koi cheez sachchi thi — itni sachchi ki waqt aur faasla bhi use mitaa nahi paya. <span class="hindi-line">Aapki yaad ka matlab hai meri duniya mein aapse ek asli rishta hai.</span><br><br>
+        Apni aankhein band kijiye. Woh ek memory yaad kijiye jo sabse zyada warm lage — woh hansi, woh baat, woh ek lamha. Feel kijiye usse. Woh yaad aapki hai, kahin nahi jaayegi.<br><br>
+        Maine yeh glowing room banaya — baarish ke saath, billi ke saath, chai ke saath — taaki jab bhi aap akela feel karein, yahan aa sakein. Aur yahan, aap kabhi akeli nahi hain.
+        <span class="sign-off" style="color:var(--blue)">— hamesha yahan 🌙</span>
       </div>
     </div>
 
-    <!-- 4 -->
-    <button class="ow-btn" data-col="green" onclick="toggleOW(this,'ow4')">
-      <span class="ow-icon">🌿</span>
-      <span class="ow-text">
-        <span class="ow-label">open when</span>
-        <span class="ow-title">Jab khud pe vishwaas na ho</span>
-        <span class="ow-sub">Tum sab kar sakti ho, seriously</span>
+    <button class="open-btn" aria-expanded="false" onclick="toggleMsg(this,'ow4')">
+      <span class="btn-icon">🌿</span>
+      <span class="btn-text">
+        <span class="btn-label">open when</span>
+        <span class="btn-title">Aapko khud pe vishwaas na ho</span>
+        <span class="btn-title-hindi">when you doubt yourself</span>
       </span>
-      <span class="ow-arrow">›</span>
+      <span class="btn-arrow">›</span>
     </button>
-    <div class="ow-msg" id="ow4" data-col="green">
-      <div class="ow-msg-inner">
-        <span class="qmark" style="color:var(--green)">"</span>
-        <p>Didu, ruk. Ek second ke liye ruk.</p>
-        <p>Woh awaaz jo keh rahi hai "main nahi kar sakti" — woh jhooth bol rahi hai. <span class="hl">Aap woh insaan hain jo abhi tak har muskil se lad ke aayi hain</span> — bina kisi ko pata chale, bina kisi medal ke, sirf apni himmat se.</p>
-        <p>Aapki aankhon mein jo roshni hai, woh kisi aur ke paas nahi. Aapka jo dil hai — itna bada, itna caring — woh aapki sabse badi taakat hai.</p>
-        <p>Aaj sirf ek step lo. Sirf ek. Baaki kal dekh lena. Aur mujhe poora yakeen hai aap le sakti hain.</p>
-        <span class="sign-off" style="color:var(--green)">— Aap par poora bharosa hai 🌿</span>
-      </div>
-    </div>
-
-    <!-- 5 -->
-    <button class="ow-btn" data-col="gold" onclick="toggleOW(this,'ow5')">
-      <span class="ow-icon">🌙</span>
-      <span class="ow-text">
-        <span class="ow-label">open when</span>
-        <span class="ow-title">Jab raat ko neend na aaye</span>
-        <span class="ow-sub">2 baje ka silence — main hoon</span>
-      </span>
-      <span class="ow-arrow">›</span>
-    </button>
-    <div class="ow-msg" id="ow5" data-col="gold">
-      <div class="ow-msg-inner">
-        <span class="qmark" style="color:var(--gold)">"</span>
-        <p>Hey Didu,</p>
-        <p>Raat ke is waqt — chahe 2 baje hoon ya 4 — jab sara zamana so raha ho aur sirf aapki aankhein khuli hoon... main yahan hoon.</p>
-        <p><span class="hl">Jo bhi dimag mein ghoom raha hai, usse ek ek karke letter box mein daal do</span> — ek notebook lo, sab kuch likh lo, aur band kar do. Woh thoughts subah bhi wahan honge agar zarurat padi.</p>
-        <p>Abhi ke liye: aankhein band karo. Baarish ki awaaz suno. Apni saans feel karo. Apni billi ki tarah curl ho jaao blanket mein.</p>
-        <p><em>Subah hogi. Aap theek hongi. Main wada karta hoon.</em></p>
-        <span class="sign-off" style="color:var(--gold)">— Aapki neend ka guard 🌙</span>
-      </div>
-    </div>
-
-    <!-- 6 -->
-    <button class="ow-btn" data-col="teal" onclick="toggleOW(this,'ow6')">
-      <span class="ow-icon">⭐</span>
-      <span class="ow-text">
-        <span class="ow-label">open when</span>
-        <span class="ow-title">Jab kuch achha feel karna ho</span>
-        <span class="ow-sub">Teri smile ke liye specifically 🌟</span>
-      </span>
-      <span class="ow-arrow">›</span>
-    </button>
-    <div class="ow-msg" id="ow6" data-col="teal">
-      <div class="ow-msg-inner">
-        <span class="qmark" style="color:var(--teal)">"</span>
-        <p>Sunnn Didu!</p>
-        <p>Kya pata tha ki aap aaj yahan click karengi aur main yahan wait kar raha hounga aapki silly si smile ke liye? Par tha. Main jaanta tha.</p>
-        <p>Aapko pata hai kya mujhe kya achha lagta hai aapke baare mein? Yeh nahi ki aap kitni smart hain ya kitni caring — balki woh choti si chiz: <span class="hl">jab aap padhte padhte khud pe hi has leti hain.</span> Woh ek second asli hoti hai.</p>
-        <p>Aaj ke din ka ek kaam hai bas: kuch aisa karo jo genuinely khush kare. Chai, music, baarish mein baithna — kuch bhi. <em>Khushi ka haq hai aapka.</em></p>
-        <span class="sign-off" style="color:var(--teal)">— Aapki muskaan ka deewana ⭐</span>
-      </div>
-    </div>
-
-  </div><!-- end ow-wrap -->
-
-  <div class="divider"></div>
-
-  <!-- LOVE LETTER -->
-  <p class="sec-title">📜 &nbsp; ek khat — sirf aapki aankhon ke liye</p>
-  <div style="width:100%">
-    <button class="letter-btn" onclick="toggleLetter(this)">
-      <span style="font-size:1.5rem">📜</span>
-      <span style="flex:1;text-align:left;">
-        <span style="display:block;font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(251,191,36,.45);margin-bottom:3px;">Sealed with love</span>
-        <span style="font-size:.92rem;font-weight:600;color:var(--text);">Ek Khat — Tumhare Liye, Didu</span>
-      </span>
-      <span class="l-arrow">›</span>
-    </button>
-    <div class="letter-body" id="letterBody">
-      <div class="letter-inner">
-        <span class="letter-date">Kisi raat, baarish ke waqt — May 2026</span>
+    <div class="message-card msg-4" id="ow4">
+      <div class="message-inner">
+        <span class="quote-mark" style="color:var(--green)">"</span>
         Meri Didu,<br><br>
-        Yeh khat likhne baitha toh socha kahan se shuru karun. Phir socha — aap toh woh hain na, jiske baare mein sochna shuru karo toh alfaaz khud nikal aate hain.<br><br>
-        16 January 2026 ko aap mere liye ek naam thi. Phir ek baat. Phir ek awaaz. Phir ek aadat — woh wali jo tab pata chalti hai jab kuch na ho toh kuch khaali sa lage.<br><br>
-        Main chahta hoon ki aap jaan lein — woh din jab aap thak jaayein, jab duniya bhaari lage, jab smile banana mushkil ho — tab bhi aap meri nazar mein wahi hain jo pehli baar theen. <strong style="color:rgba(251,191,36,.8)">Koi chand nahi ghata, Didu.</strong><br><br>
-        Aapki hassi — woh asli wali, jo aankhon tak aati hai — woh meri sabse pasandida cheez hai. Usse sambhal ke rakhna. Duniya us hassi ki haqdar bhi nahi.<br><br>
-        Khyal rakhna apna. Chai peena. Sona thoda zyada. Aur kabhi kabhi yahan aa jaana — main hamesha hoon.
-        <span class="letter-end">— Aapka apna chota bhai 🌙💗</span>
+        Rukiye. Ek second ke liye rukiye.<br><br>
+        Woh awaaz jo keh rahi hai "main nahi kar sakti" — woh jhooth bol rahi hai. <span class="hindi-line">Aap woh hain jo abhi tak har muskil se lad ke aayi hain</span> — bina kisi ko pata chale, bina kisi medal ke, sirf apni himmat se.<br><br>
+        Aapki aankhon mein jo roshni hai, woh kisi aur ke paas nahi. Aapka jo dil hai — itna bada, itna caring — woh aapki sabse badi taakat hai.<br><br>
+        Aaj sirf ek step lijiye. Sirf ek. Baaki kal dekh lena. Aur mujhe yakeen hai aap le sakti hain.
+        <span class="sign-off" style="color:var(--green)">— aap par poora bharosa hai 🌿</span>
       </div>
     </div>
+
+    <button class="open-btn" aria-expanded="false" onclick="toggleMsg(this,'ow5')">
+      <span class="btn-icon">⭐</span>
+      <span class="btn-text">
+        <span class="btn-label">open when</span>
+        <span class="btn-title">Aapko kuch achha feel karna ho</span>
+        <span class="btn-title-hindi">when you need a smile</span>
+      </span>
+      <span class="btn-arrow">›</span>
+    </button>
+    <div class="message-card msg-5" id="ow5">
+      <div class="message-inner">
+        <span class="quote-mark" style="color:var(--gold)">"</span>
+        Suniye Didu 🌟<br><br>
+        Kya pata tha aap aaj yahan click karengi aur main yahan wait kar raha hounga aapki pyari si smile ke liye?<br><br>
+        Aapko pata hai kya mujhe achha lagta hai aapke baare mein? Yeh nahi ki aap kitni smart hain ya kitni caring — balki woh choti si chiz: <span class="hindi-line">jab aap khaana khate khate hasne lagti hain apni hi baat pe.</span> Woh ek second asli hoti hai.<br><br>
+        Aaj ke din ka ek kaam hai bas: kuch aisa kijiye jo aapko genuinely khush kare — chahe woh naan-butter ho, TikTok ho, ya baarish mein bheegna. <em>Khushi ka haq hai aapka.</em>
+        <span class="sign-off" style="color:var(--gold)">— aapki muskaan ka deewana ⭐</span>
+      </div>
+    </div>
+
+    <button class="open-btn" aria-expanded="false" onclick="toggleMsg(this,'ow6')">
+      <span class="btn-icon">💗</span>
+      <span class="btn-text">
+        <span class="btn-label">open when</span>
+        <span class="btn-title">Aapko raat ko neend na aaye</span>
+        <span class="btn-title-hindi">when you can't sleep</span>
+      </span>
+      <span class="btn-arrow">›</span>
+    </button>
+    <div class="message-card msg-6" id="ow6">
+      <div class="message-inner">
+        <span class="quote-mark" style="color:var(--pink)">"</span>
+        Hey Didu,<br><br>
+        Raat ke is waqt — chahe 2 baje hoon ya 4 — jab sara zamana so raha ho aur sirf aapki aankhein khuli hon... main yahan hoon.<br><br>
+        <span class="hindi-line">Jo bhi dimag mein ghoom raha hai, usse ek ek karke letter box mein daal dijiye</span> — ek kaali notebook lijiye, sab kuch likh lijiye, aur band kar dijiye. Woh thoughts subah bhi wahan hongi agar zarurat padi.<br><br>
+        Abhi ke liye: aankhein band kijiye. Baarish ki awaaz suniye. Apni saans feel kijiye. Apni billi ki tarah curl ho jaiye blanket mein.<br><br>
+        <em>Subah hogi. Aap theek hongi. Main wada karta hoon.</em>
+        <span class="sign-off" style="color:var(--pink)">— aapki neend ka guard 💗</span>
+      </div>
+    </div>
+
   </div>
 
   <div class="divider"></div>
 
   <!-- MEMORY JAR -->
-  <p class="sec-title">🫙 &nbsp; hamari yaadein ka daaba</p>
+  <p class="section-title">🫙 hamari yaadon ka dabba</p>
   <div class="jar-section">
-    <div class="mem-input-row">
-      <input class="mem-input" id="memInput" placeholder="koi pyaari yaad ya baat likho..." maxlength="130" onkeydown="if(event.key==='Enter')addMemory()">
-      <button class="mem-add" onclick="addMemory()">+</button>
+    <div class="memory-input-wrap">
+      <input class="memory-input" id="memoryInput" placeholder="koi pyaari yaad likhiye..." maxlength="120" onkeydown="if(event.key==='Enter')addMemory()">
+      <button class="add-btn" onclick="addMemory()">+</button>
     </div>
-    <div class="mem-jar" id="memJar">
-      <div class="jar-empty" id="jarEmpty">✨ Abhi koi yaad nahi... koi likho na 🫙</div>
+    <div class="memories-jar" id="memoriesJar">
+      <div class="jar-empty" id="jarEmpty">✨ Abhi koi yaad nahi... koi likhiye na 🫙</div>
     </div>
   </div>
 
   <div class="divider"></div>
 
-  <!-- TRIVIA GAME -->
-  <p class="sec-title">🎮 &nbsp; hamara chota sa game</p>
-  <div class="game-section">
-    <div class="game-card glass">
-      <div class="score-row">
-        <span>Score: <span id="gameScore" style="color:var(--pink)">0</span></span>
-        <span>Question: <span id="gameQ" style="color:var(--purple)">1</span>/5</span>
+  <!-- LOVE LETTER -->
+  <p class="section-title">💌 ek khat — sirf aapki aankhon ke liye</p>
+  <div class="letter-wrap">
+    <button class="letter-btn" onclick="toggleLetter(this)">
+      <span style="font-size:1.5rem">📜</span>
+      <span style="flex:1;text-align:left;">
+        <span style="font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:rgba(251,191,36,.5);display:block;margin-bottom:3px;">Sealed with respect</span>
+        <span style="font-size:.95rem;font-weight:600;color:rgba(255,255,255,.85);">Ek Khat — Aapke Liye</span>
+      </span>
+      <span style="color:rgba(251,191,36,.5);font-size:1rem;transition:transform .3s;" class="letter-arrow">›</span>
+    </button>
+    <div class="letter-body" id="letterBody">
+      <div class="letter-inner">
+        <span class="letter-date">Kisi raat, baarish ke waqt</span>
+        Meri Zoya Didu,<br><br>
+        Yeh khat likhne baitha toh socha kahan se shuru karun. Phir socha — aap toh woh hain na, jiske baare mein sochna shuru karo toh alfaaz khud nikal aate hain.<br><br>
+        Aapko pata hai na ki aap mein kuch aisa hai jo logo ko apni taraf kheenchta hai? Woh aapki aadat nahi hai, woh koi ek khoobsoorti nahi — woh kuch aur hai. <strong style="color:rgba(251,191,36,.8)">Aapka honaa hi kaafi hai. Aapka sirf wahan hona, sirf breathe karna — kamra bhar jaata hai kuch alag se.</strong><br><br>
+        Main chahta hoon ki aap jaan lein — woh din jab aap thak jayein, jab duniya bhaari lage, jab smile banana mushkil ho — tab bhi aap meri nazar mein wahi Zoya Didu hain jo pehli baar thi. Koi chand nahi ghataa.<br><br>
+        Aapki hassi — woh asli wali, jo aankhon tak aati hai — woh meri sabse pasandida cheez hai duniya mein. Use sambhal ke rakhna. Duniya us hassi ki haqdar bhi nahi.<br><br>
+        Khyal rakhna apna. Chai peena. Sona thoda. Aur kabhi kabhi yahan aa jaana — aapka pyara baccha hamesha yahin hai.
+        <span class="letter-end">— aapka apna 🌙💗</span>
       </div>
-      <p class="game-prompt" id="gamePrompt">Loading...</p>
-      <div class="game-options" id="gameOptions"></div>
-      <p class="game-result" id="gameResult"></p>
-      <button class="game-next" id="gameNext" onclick="nextQuestion()">Agla sawaal ›</button>
-    </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- WISH BOARD -->
-  <p class="sec-title">🌠 &nbsp; aapke liye mere 4 wishes</p>
-  <div class="wish-grid">
-    <div class="wish-card" onclick="toggleWish(this,'w1')">
-      <span class="wish-icon">🌸</span>
-      <div class="wish-title">Sehat</div>
-      <div class="wish-sub">Pehli dua</div>
-      <div class="wish-reveal" id="w1"><p>Teri har raat neend achhi ho, teri subah fresh ho. Tu khud ka khyal rakhna — yeh meri request nahi, yeh meri zarurat hai.</p></div>
-    </div>
-    <div class="wish-card" onclick="toggleWish(this,'w2')">
-      <span class="wish-icon">✨</span>
-      <div class="wish-title">Sapne</div>
-      <div class="wish-sub">Jo aap chahti hain</div>
-      <div class="wish-reveal" id="w2"><p>Aapke jo bhi sapne hain — chhote, bade, pagal wale — woh poore hon. Aap deserve karti hain woh sab jo kabhi socha bhi na ho.</p></div>
-    </div>
-    <div class="wish-card" onclick="toggleWish(this,'w3')">
-      <span class="wish-icon">😂</span>
-      <div class="wish-title">Hasna</div>
-      <div class="wish-sub">Roz, khul ke</div>
-      <div class="wish-reveal" id="w3"><p>Aapki woh hansee — jo pet pakad ke aaye — woh roz aaye. Hasna aapki identity hai, use kabhi mat chhodna.</p></div>
-    </div>
-    <div class="wish-card" onclick="toggleWish(this,'w4')">
-      <span class="wish-icon">🌙</span>
-      <div class="wish-title">Sukoon</div>
-      <div class="wish-sub">Andar ka chain</div>
-      <div class="wish-reveal" id="w4"><p>Woh andar ka sukoon — jo duniya ki baat se nahi milta — woh aapko mile. Jab bhi aap andar jhankein, wahan shanti mile.</p></div>
     </div>
   </div>
 
   <div class="divider"></div>
 
   <!-- COUNTDOWN -->
-  <p class="sec-title">⏳ &nbsp; hamara waqt — since jan 16</p>
-  <div class="cd-display">
-    <div class="cd-unit"><span class="cd-num" id="cdD">—</span><span class="cd-label">din</span></div>
-    <div class="cd-unit"><span class="cd-num" id="cdH">—</span><span class="cd-label">ghante</span></div>
-    <div class="cd-unit"><span class="cd-num" id="cdM">—</span><span class="cd-label">minute</span></div>
-    <div class="cd-unit"><span class="cd-num" id="cdS">—</span><span class="cd-label">second</span></div>
+  <p class="section-title">⏳ hamara waqt</p>
+  <div class="countdown-section">
+    <div class="countdown-display" id="countdown">
+      <div class="cd-unit"><span class="cd-num" id="cdDays">—</span><span class="cd-label">din</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cdHours">—</span><span class="cd-label">ghante</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cdMins">—</span><span class="cd-label">minute</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cdSecs">—</span><span class="cd-label">second</span></div>
+    </div>
+    <p style="text-align:center;font-size:.65rem;letter-spacing:2px;color:var(--muted);margin-top:10px;font-style:italic;">16 January 2026 se ab tak 🌙</p>
   </div>
-  <p class="cd-note">jab se hum mile 🌙 16 January 2026 se</p>
 
   <div class="divider"></div>
 
-  <!-- SECRET POEM -->
-  <p class="sec-title">🔮 &nbsp; ek raaz — 3 baar tap karo</p>
-  <div class="secret-wrap" id="secretWrap" onclick="secretKnock()">
-    <p class="secret-label" id="secretLabel">✦ &nbsp; tap &nbsp; ✦ &nbsp; tap &nbsp; ✦ &nbsp; tap &nbsp; ✦</p>
-    <div class="secret-content" id="secretContent">
-      <div class="secret-poem">
-        Aapke liye ek nazm...<br><br>
-        <em>Baarish ki har boond mein<br>
-        aapka hi naam hota hai,<br>
-        khidki ki dhund pe<br>
-        aapka chehra banta hai.</em><br><br>
-        <em>Raat ko jo sitaare hain<br>
-        woh sab aapke gawah hain —<br>
-        ki aap bohot khaas hain<br>
-        is duniya ke liye.</em><br><br>
-        <span style="color:var(--pink);font-size:1.15rem;">— sirf Didu ke liye likha 🌙</span>
+  <!-- WISH BOARD -->
+  <p class="section-title">🌠 aapse mere 4 wishes</p>
+  <div class="wish-board">
+    <div class="wishes-grid">
+      <div class="wish-card" onclick="toggleWish(this,'w1')">
+        <span class="wish-icon">🌸</span>
+        <div class="wish-title">Sehat</div>
+        <div class="wish-sub">Meri pehli dua</div>
+        <div class="wish-reveal" id="w1"><p>Aapki har raat neend achhi ho, aapki subah fresh ho, aapka body healthy ho. Aap khud ka khyal rakhna — yeh meri request nahi, yeh meri zarurat hai.</p></div>
+      </div>
+      <div class="wish-card" onclick="toggleWish(this,'w2')">
+        <span class="wish-icon">✨</span>
+        <div class="wish-title">Sapne</div>
+        <div class="wish-sub">Jo aapko chahiye</div>
+        <div class="wish-reveal" id="w2"><p>Aapke jo bhi sapne hain — chhote, bade, pagal wale — woh poore hon. Aap deserve karti hain woh sab jo aapne kabhi socha bhi na ho.</p></div>
+      </div>
+      <div class="wish-card" onclick="toggleWish(this,'w3')">
+        <span class="wish-icon">😂</span>
+        <div class="wish-title">Hasna</div>
+        <div class="wish-sub">Roz, khul ke</div>
+        <div class="wish-reveal" id="w3"><p>Aapki woh hansee — jo pet pakad ke aaye, aankhon mein paani aaye — woh roz aaye. Koi bhi wajah se. Hasna aapki identity hai.</p></div>
+      </div>
+      <div class="wish-card" onclick="toggleWish(this,'w4')">
+        <span class="wish-icon">🌙</span>
+        <div class="wish-title">Sukoon</div>
+        <div class="wish-sub">Andar ka chain</div>
+        <div class="wish-reveal" id="w4"><p>Woh andar ka sukoon — jo duniya ki baat se nahi milta — woh aapko mile. Aap jab bhi apne andar jhankhe, wahan shanti mile.</p></div>
       </div>
     </div>
   </div>
 
   <div class="divider"></div>
 
-  <!-- PHOTO WALL -->
-  <p class="sec-title">🖼️ &nbsp; hamari memories wall</p>
-  <p class="photo-note">Yahan apni favourite photos upload karo — yeh sirf aapke phone mein rahegi, kahi nahi jaayegi. Apni ek small gallery banaao 🌸</p>
-  <div class="photo-grid" id="photoGrid">
-    <div class="photo-slot" onclick="triggerPhoto(this)"><input type="file" accept="image/*" onchange="loadPhoto(this)"><span class="photo-icon">🌸</span><span class="photo-label">Add Photo</span></div>
-    <div class="photo-slot" onclick="triggerPhoto(this)"><input type="file" accept="image/*" onchange="loadPhoto(this)"><span class="photo-icon">💗</span><span class="photo-label">Add Photo</span></div>
-    <div class="photo-slot" onclick="triggerPhoto(this)"><input type="file" accept="image/*" onchange="loadPhoto(this)"><span class="photo-icon">✨</span><span class="photo-label">Add Photo</span></div>
-    <div class="photo-slot" onclick="triggerPhoto(this)"><input type="file" accept="image/*" onchange="loadPhoto(this)"><span class="photo-icon">🌙</span><span class="photo-label">Add Photo</span></div>
-    <div class="photo-slot" onclick="triggerPhoto(this)"><input type="file" accept="image/*" onchange="loadPhoto(this)"><span class="photo-icon">⭐</span><span class="photo-label">Add Photo</span></div>
-    <div class="photo-slot" onclick="triggerPhoto(this)"><input type="file" accept="image/*" onchange="loadPhoto(this)"><span class="photo-icon">🌺</span><span class="photo-label">Add Photo</span></div>
+  <!-- SECRET POEM -->
+  <p class="section-title">🔮 ek raaz — 3 baar tap kijiye</p>
+  <div class="secret-section">
+    <div class="secret-wrap" id="secretWrap" onclick="secretKnock()">
+      <p class="secret-label" id="secretLabel">✦ &nbsp; tap &nbsp; ✦ &nbsp; tap &nbsp; ✦ &nbsp; tap &nbsp; ✦</p>
+      <div class="secret-content" id="secretContent">
+        <div class="secret-poem">
+          Aapke liye ek nazm...<br><br>
+          <em>Baarish ki har boond mein<br>
+          aapka hi naam hota hai,<br>
+          khidki ki dhund pe<br>
+          aapka chehra banta hai.</em><br><br>
+          <em>Raat ko jo sitaare hain<br>
+          woh sab aapke gawah hain —<br>
+          ki aap bahut khaas hain<br>
+          is duniya ke liye.</em><br><br>
+          <span style="color:var(--pink);font-size:1.2rem;">— sirf aapke liye likha 🌙</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="divider"></div>
 
-  <!-- MUSIC -->
-  <p class="sec-title">🎵 &nbsp; lofi — aapki raat ke liye</p>
-  <div style="width:100%;margin-bottom:6px;">
-    <div class="spotify-wrap">
-      <iframe src="https://open.spotify.com/embed/playlist/0vvXsWCC9xrXsKd4euo32U?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    </div>
+  <!-- SPOTIFY -->
+  <p class="music-label">🎵 &nbsp; lofi — aapki raat ke liye &nbsp; 🎵</p>
+  <div class="spotify-wrap">
+    <iframe src="https://open.spotify.com/embed/playlist/0vvXsWCC9xrXsKd4euo32U?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
   </div>
 
   <div class="divider"></div>
 
   <!-- FOOTER -->
   <div class="footer">
-    <p class="footer-text">Banaya gaya <span class="hb">💗</span> ke saath — sirf Zoya Didu ke liye</p>
-    <p style="font-family:'DM Mono',monospace;font-size:.52rem;color:rgba(255,255,255,.08);margin-top:6px;letter-spacing:.12em;">click karke dil bharao 💫</p>
+    <p class="footer-text">Banaya gaya <span class="heartbeat" style="display:inline-block;animation:hb .8s ease-in-out infinite;">💗</span> ke saath — sirf Zoya Didu ke liye</p>
+    <p style="font-size:.55rem;color:rgba(255,255,255,.1);margin-top:6px;letter-spacing:2px;">click karke dil bharao 💫</p>
   </div>
 
-</div><!-- end #app -->
+</div>
 
 <script>
-// ─── INTRO ───
-function enterPage(){
-  document.getElementById('intro-overlay').classList.add('gone');
-  showToast('🌙 Swagat hai, Didu!');
-}
-// Intro stars
-const iStars=document.getElementById('introStars');
-for(let i=0;i<80;i++){
-  const s=document.createElement('div');
-  const sz=Math.random()*2+.8;
-  s.style.cssText=`position:absolute;width:${sz}px;height:${sz}px;border-radius:50%;left:${Math.random()*100}%;top:${Math.random()*100}%;background:rgba(255,255,255,${Math.random()*.5+.1});animation:twinkle ${1.5+Math.random()*3}s ease-in-out ${Math.random()*3}s infinite;`;
-  const st=document.createElement('style');
-  st.textContent='@keyframes twinkle{0%,100%{opacity:.15;transform:scale(1);}50%{opacity:.9;transform:scale(1.5);}}';
-  if(i===0)document.head.appendChild(st);
-  iStars.appendChild(s);
-}
-
 // ─── CURSOR ───
-const cur=document.getElementById('cursor');
-const trail=document.getElementById('cursor-trail');
-let mx=0,my=0,tx=0,ty=0;
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  cur.style.left=mx+'px';cur.style.top=my+'px';
-  setTimeout(()=>{trail.style.left=mx+'px';trail.style.top=my+'px';},90);
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursor-trail');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  setTimeout(() => {
+    trail.style.left = e.clientX + 'px';
+    trail.style.top = e.clientY + 'px';
+  }, 80);
 });
 
-// ─── AURORA CANVAS ───
-const aurC=document.getElementById('aurora-canvas');
-const aurCtx=aurC.getContext('2d');
-function resizeAur(){aurC.width=innerWidth;aurC.height=innerHeight;}
-resizeAur();window.addEventListener('resize',resizeAur);
-let aurT=0;
-const aurBands=[
-  {col:'rgba(192,132,252,.055)',y:.12,spd:.0004,amp:60},
-  {col:'rgba(255,110,180,.04)',y:.35,spd:.0006,amp:80},
-  {col:'rgba(125,211,252,.035)',y:.6,spd:.0003,amp:50},
-];
-function drawAurora(){
-  aurCtx.clearRect(0,0,aurC.width,aurC.height);
-  aurT+=1;
-  aurBands.forEach(b=>{
-    const y=aurC.height*b.y+Math.sin(aurT*b.spd*300)*b.amp;
-    const g=aurCtx.createLinearGradient(0,y-120,0,y+120);
-    g.addColorStop(0,'transparent');g.addColorStop(.5,b.col);g.addColorStop(1,'transparent');
-    aurCtx.fillStyle=g;
-    aurCtx.beginPath();
-    aurCtx.moveTo(0,y);
-    for(let x=0;x<=aurC.width;x+=30){
-      const wave=Math.sin((x/aurC.width*2+aurT*b.spd)*Math.PI*2)*b.amp*.4;
-      aurCtx.lineTo(x,y+wave);
-    }
-    aurCtx.lineTo(aurC.width,aurC.height);aurCtx.lineTo(0,aurC.height);aurCtx.closePath();
-    aurCtx.fill();
+// ─── RAIN ───
+const canvas = document.getElementById('rain');
+const ctx = canvas.getContext('2d');
+let drops = [];
+function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+resize(); window.addEventListener('resize', resize);
+function initDrops() {
+  drops = [];
+  const n = Math.floor(innerWidth / 6);
+  for (let i = 0; i < n; i++) drops.push({
+    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+    len: Math.random() * 20 + 8, speed: Math.random() * 2 + 0.5,
+    op: Math.random() * 0.12 + 0.03, w: Math.random() * 0.8 + 0.2
   });
-  requestAnimationFrame(drawAurora);
 }
-drawAurora();
-
-// ─── RAIN CANVAS ───
-const rainC=document.getElementById('rain-canvas');
-const rainCtx=rainC.getContext('2d');
-let drops=[];
-function resizeRain(){rainC.width=innerWidth;rainC.height=innerHeight;}
-resizeRain();window.addEventListener('resize',()=>{resizeRain();initDrops();});
-function initDrops(){
-  drops=[];
-  const n=Math.floor(innerWidth/5);
-  for(let i=0;i<n;i++)drops.push({x:Math.random()*rainC.width,y:Math.random()*rainC.height,len:Math.random()*20+8,spd:Math.random()*2.2+.8,op:Math.random()*.14+.03,w:Math.random()*.9+.2});
-}
-initDrops();
-function drawRain(){
-  rainCtx.clearRect(0,0,rainC.width,rainC.height);
-  drops.forEach(d=>{
-    rainCtx.beginPath();rainCtx.moveTo(d.x,d.y);
-    rainCtx.lineTo(d.x-d.len*.16,d.y+d.len);
-    rainCtx.strokeStyle=`rgba(160,210,255,${d.op})`;rainCtx.lineWidth=d.w;rainCtx.stroke();
-    d.y+=d.spd;d.x-=d.spd*.16;
-    if(d.y>rainC.height){d.y=-d.len;d.x=Math.random()*rainC.width;}
+initDrops(); window.addEventListener('resize', initDrops);
+function drawRain() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drops.forEach(d => {
+    ctx.beginPath(); ctx.moveTo(d.x, d.y);
+    ctx.lineTo(d.x - d.len * 0.15, d.y + d.len);
+    ctx.strokeStyle = `rgba(160,210,255,${d.op})`; ctx.lineWidth = d.w; ctx.stroke();
+    d.y += d.speed; d.x -= d.speed * 0.15;
+    if (d.y > canvas.height) { d.y = -d.len; d.x = Math.random() * canvas.width; }
   });
   requestAnimationFrame(drawRain);
 }
 drawRain();
 
-// ─── LIGHTNING ───
-const lgEl=document.getElementById('lightning');
-function flash(){
-  lgEl.style.background='rgba(200,215,255,.045)';
-  setTimeout(()=>{lgEl.style.background='transparent';},75);
-  setTimeout(()=>{lgEl.style.background='rgba(200,215,255,.065)';setTimeout(()=>{lgEl.style.background='transparent';},55);},115);
-  setTimeout(flash,9000+Math.random()*20000);
-}
-setTimeout(flash,6000);
-
 // ─── STARS ───
-for(let i=0;i<70;i++){
-  const s=document.createElement('div');s.className='star-p';
-  const sz=Math.random()*2.2+.8;
-  s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;top:${Math.random()*65}vh;background:rgba(255,255,255,${Math.random()*.28+.06});animation-duration:${1.8+Math.random()*3}s;animation-delay:${Math.random()*4}s;`;
+for (let i = 0; i < 60; i++) {
+  const s = document.createElement('div'); s.className = 'star';
+  const sz = Math.random() * 2 + 1;
+  s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;top:${Math.random()*60}vh;background:rgba(255,255,255,${Math.random()*.3+.05});animation-duration:${2+Math.random()*3}s;animation-delay:${Math.random()*4}s;`;
   document.body.appendChild(s);
 }
 
-// ─── PETALS ───
-const petals=['🌸','✨','💗','💫','⭐','🌺'];
-function spawnPetal(){
-  const el=document.createElement('div');el.className='petal-p';
-  el.textContent=petals[Math.floor(Math.random()*petals.length)];
-  el.style.cssText=`left:${Math.random()*100}vw;top:-30px;font-size:${9+Math.random()*9}px;opacity:.35;animation-duration:${13+Math.random()*10}s;animation-delay:0s;`;
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),28000);
-}
-setInterval(spawnPetal,2500);
-for(let i=0;i<4;i++)setTimeout(spawnPetal,i*600);
-
-// ─── FLOAT PARTICLES ───
-const pCols=['rgba(255,110,180,.45)','rgba(192,132,252,.4)','rgba(125,211,252,.35)','rgba(251,191,36,.35)','rgba(110,231,183,.3)'];
-function spawnFloat(){
-  const el=document.createElement('div');el.className='float-p';
-  const sz=Math.random()*3.5+1;const c=pCols[Math.floor(Math.random()*pCols.length)];
-  el.style.cssText=`width:${sz}px;height:${sz}px;border-radius:50%;left:${Math.random()*100}vw;top:${78+Math.random()*20}vh;background:${c};box-shadow:0 0 ${sz*3}px ${c};animation-duration:${10+Math.random()*9}s;animation-delay:${Math.random()*3}s;`;
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),22000);
-}
-setInterval(spawnFloat,700);
-for(let i=0;i<10;i++)setTimeout(spawnFloat,i*150);
-
-// ─── CLICK FX ───
-const clickEmojis=['💗','💕','🌸','✨','💫','⭐','🤍'];
-document.addEventListener('click',e=>{
-  if(e.target.closest('iframe,input'))return;
-  for(let i=0;i<7;i++){
-    const h=document.createElement('div');h.className='h-burst';
-    h.textContent=clickEmojis[Math.floor(Math.random()*clickEmojis.length)];
-    const ang=Math.random()*360,dist=45+Math.random()*65;
-    h.style.setProperty('--dx',Math.cos(ang*Math.PI/180)*dist+'px');
-    h.style.setProperty('--dy',Math.sin(ang*Math.PI/180)*dist+'px');
-    h.style.left=e.clientX+'px';h.style.top=e.clientY+'px';
+// ─── HEART BURST on click ───
+document.addEventListener('click', e => {
+  if (e.target.closest('button, input, iframe, a')) return;
+  const hearts = ['💗','💕','🌸','✨','💫','⭐'];
+  for (let i = 0; i < 6; i++) {
+    const h = document.createElement('div'); h.className = 'heart-burst';
+    h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+    const angle = Math.random()*360; const dist = 40+Math.random()*60;
+    h.style.setProperty('--dx', Math.cos(angle*Math.PI/180)*dist+'px');
+    h.style.setProperty('--dy', Math.sin(angle*Math.PI/180)*dist+'px');
+    h.style.left = e.clientX+'px'; h.style.top = e.clientY+'px';
     document.body.appendChild(h);
-    setTimeout(()=>h.remove(),1000);
+    setTimeout(() => h.remove(), 900);
   }
-  const r=document.createElement('div');r.className='ripple-click';
-  r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';
-  document.body.appendChild(r);
-  setTimeout(()=>r.remove(),900);
 });
-document.addEventListener('touchstart',e=>{
-  const t=e.touches[0];
-  const h=document.createElement('div');h.className='h-burst';
-  h.textContent='🤍';
-  h.style.setProperty('--dx','0px');h.style.setProperty('--dy','-60px');
-  h.style.left=t.clientX+'px';h.style.top=t.clientY+'px';
-  document.body.appendChild(h);setTimeout(()=>h.remove(),1000);
-  const r=document.createElement('div');r.className='ripple-click';
-  r.style.left=t.clientX+'px';r.style.top=t.clientY+'px';
-  document.body.appendChild(r);setTimeout(()=>r.remove(),900);
-},{passive:true});
 
-// ─── DAYS COUNTER ───
-const START=new Date('2026-01-16T00:00:00');
-function updateTime(){
-  const now=new Date();const diff=Math.max(0,now-START);
-  const days=Math.floor(diff/86400000);
-  const h=Math.floor((diff%86400000)/3600000);
-  const m=Math.floor((diff%3600000)/60000);
-  const s=Math.floor((diff%60000)/1000);
-  document.getElementById('daysCount').textContent=`${days} din aur ${h} ghante ka yeh bond ✨`;
-  document.getElementById('exactTime').textContent=`${String(h).padStart(2,'0')}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`;
-  document.getElementById('cdD').textContent=String(days).padStart(3,'0');
-  document.getElementById('cdH').textContent=String(h).padStart(2,'0');
-  document.getElementById('cdM').textContent=String(m).padStart(2,'0');
-  document.getElementById('cdS').textContent=String(s).padStart(2,'0');
+// ─── TOGGLE MSG ───
+function toggleMsg(btn, id) {
+  const card = document.getElementById(id);
+  const isOpen = btn.getAttribute('aria-expanded') === 'true';
+  document.querySelectorAll('.message-card').forEach(c => c.classList.remove('open'));
+  document.querySelectorAll('.open-btn').forEach(b => b.setAttribute('aria-expanded','false'));
+  if (!isOpen) {
+    card.classList.add('open'); btn.setAttribute('aria-expanded','true');
+    setTimeout(() => card.scrollIntoView({behavior:'smooth',block:'nearest'}), 100);
+    showToast('💌 khat khul gaya...');
+  }
 }
-updateTime();setInterval(updateTime,1000);
+
+// ─── TOGGLE LETTER ───
+function toggleLetter(btn) {
+  const body = document.getElementById('letterBody');
+  const arrow = btn.querySelector('.letter-arrow');
+  const open = body.classList.toggle('open');
+  arrow.style.transform = open ? 'rotate(90deg)' : '';
+  if (open) { showToast('📜 aapka khat...'); setTimeout(() => body.scrollIntoView({behavior:'smooth',block:'nearest'}), 100); }
+}
 
 // ─── MOOD ───
-const moodMap={
-  happy:'🌸 Sach mein? Itna achha lag raha hai? Teri khushi mujhe bhi khush karti hai. Aaj ka din aisa hi rahe!',
-  sad:'🌧 Pata hai... kabhi kabhi udaas hona bhi zaruri hota hai. Par aap akeli nahi. Chai pi, aankhein band karo, yahan raho.',
-  tired:'🌙 Rest karo. Bas rest karo. Aap kaafi kar chuki hain aaj. Bilkul billi ki tarah curl ho jao blanket mein.',
-  loved:'💗 Awww! Pyaar mein? Aapka dil bahut bada hai — itna bada ki aapki khushi bhi itni badi hai!',
-  cramps:'🥺 Ohh nahi... virtual garam paani ki bottle aur virtual hug dono bheji. Bas rest karo. Aap strong hain.',
-  bored:'✨ Chalo scroll karo neeche — bahut saari chizein hain aapke liye yahan. Game bhi hai! 🎮'
+const moodMessages = {
+  happy: '🌸 Sach mein? Itna achha lag raha hai? Aapki khushi mujhe bhi khush karti hai. Aaj ka din aisa hi rahe — seedha dil se!',
+  sad: '🌧 Pata hai... kabhi kabhi udaas hona bhi zaruri hota hai. Par aap akeli nahi hain. Chai pijiye, aankhein band kijiye, aur yahan rahiye thodi der.',
+  tired: '🌙 Rest kijiye. Bas rest kijiye. Aap kaafi kar chuki hain aaj. Apni billi ki tarah curl ho jaiye blanket mein.',
+  loved: '💗 Awww! Pyaar mein? Aapka dil bahut bada hai — itna bada ki aapki khushi bhi itni badi hai. Keep feeling this!',
+  bored: '✨ Chaliye scroll kijiye neeche — bahut saari chizein hain aapke liye yahan 🫶'
 };
-function setMood(btn,mood){
-  document.querySelectorAll('.mood-badge').forEach(b=>b.classList.remove('active'));
+function setMood(btn, mood) {
+  document.querySelectorAll('.mood-badge').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const el=document.getElementById('moodReply');
-  el.style.opacity='0';
-  setTimeout(()=>{el.textContent=moodMap[mood];el.style.opacity='1';},200);
-  showToast('💫 Mood noted!');
-}
-
-// ─── OPEN WHEN ───
-function toggleOW(btn,id){
-  const msg=document.getElementById(id);
-  const isOpen=btn.classList.contains('open');
-  document.querySelectorAll('.ow-btn').forEach(b=>b.classList.remove('open'));
-  document.querySelectorAll('.ow-msg').forEach(m=>m.classList.remove('open'));
-  if(!isOpen){
-    btn.classList.add('open');msg.classList.add('open');
-    setTimeout(()=>msg.scrollIntoView({behavior:'smooth',block:'nearest'}),150);
-    showToast('💌 Khat khul gaya...');
-  }
-}
-
-// ─── LETTER ───
-function toggleLetter(btn){
-  const body=document.getElementById('letterBody');
-  const arr=btn.querySelector('.l-arrow');
-  const open=body.classList.toggle('open');
-  arr.style.transform=open?'rotate(90deg)':'';
-  if(open){showToast('📜 Ek khat sirf aapke liye...');setTimeout(()=>body.scrollIntoView({behavior:'smooth',block:'nearest'}),150);}
+  const reply = document.getElementById('moodReply');
+  reply.style.opacity = '0';
+  setTimeout(() => { reply.textContent = moodMessages[mood]; reply.style.opacity = '1'; }, 200);
 }
 
 // ─── MEMORY JAR ───
-const memories=[];
-function addMemory(){
-  const inp=document.getElementById('memInput');
-  const v=inp.value.trim();if(!v)return;
-  memories.push(v);inp.value='';renderMem();showToast('🫙 Yaad save ho gayi!');
+const memories = [];
+function addMemory() {
+  const input = document.getElementById('memoryInput');
+  const val = input.value.trim();
+  if (!val) return;
+  memories.push(val); input.value = '';
+  renderMemories(); showToast('🫙 yaad save ho gayi!');
 }
-function renderMem(){
-  const jar=document.getElementById('memJar');
-  const emp=document.getElementById('jarEmpty');
-  if(!memories.length){emp.style.display='block';return;}
-  emp.style.display='none';
-  jar.innerHTML='';
-  memories.forEach(m=>{
-    const d=document.createElement('div');d.className='mem-item';
-    d.innerHTML=`<div class="mem-dot"></div><span>${m}</span>`;
-    jar.appendChild(d);
+function renderMemories() {
+  const jar = document.getElementById('memoriesJar');
+  const empty = document.getElementById('jarEmpty');
+  if (memories.length === 0) { empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  jar.innerHTML = '';
+  memories.forEach(m => {
+    const item = document.createElement('div'); item.className = 'memory-item';
+    item.innerHTML = `<div class="memory-dot"></div><span>${m}</span>`;
+    jar.appendChild(item);
   });
-  jar.scrollTop=jar.scrollHeight;
+  jar.scrollTop = jar.scrollHeight;
 }
 
-// ─── WISH ───
-function toggleWish(card,id){
-  const r=document.getElementById(id);
-  const open=r.classList.toggle('open');
-  card.style.borderColor=open?'rgba(255,110,180,.3)':'';
-  if(open)showToast('🌠 Wish khul gayi!');
+// ─── WISH BOARD ───
+function toggleWish(card, id) {
+  const reveal = document.getElementById(id);
+  const open = reveal.classList.toggle('open');
+  card.style.borderColor = open ? 'rgba(255,110,180,.3)' : '';
 }
 
 // ─── SECRET KNOCK ───
-let knocks=0,knockTimer;
-function secretKnock(){
-  knocks++;clearTimeout(knockTimer);
-  knockTimer=setTimeout(()=>knocks=0,1300);
-  const lbl=document.getElementById('secretLabel');
-  const hints=['✦ tap ✦','✦ tap ✦ tap ✦','✦ ek aur ✦'];
-  if(knocks<=3)lbl.textContent=hints[knocks-1]||'✦ tap ✦';
-  if(knocks>=3){
+let knockCount = 0; let knockTimer;
+function secretKnock() {
+  knockCount++;
+  clearTimeout(knockTimer);
+  knockTimer = setTimeout(() => { knockCount = 0; }, 1200);
+  const label = document.getElementById('secretLabel');
+  const labels = ['✦ tap ✦','✦ tap ✦ tap ✦','✦ ek aur ✦'];
+  if (knockCount <= 3) label.textContent = labels[knockCount-1] || '✦ tap ✦';
+  if (knockCount >= 3) {
     document.getElementById('secretContent').classList.add('open');
-    lbl.textContent='🌙 Raaz khul gaya...';
-    showToast('🔮 Nazm sirf aapke liye 💗');
-    knocks=0;
+    label.textContent = '🌙 raaz khul gaya...';
+    showToast('🔮 nazm sirf aapke liye 💗');
+    knockCount = 0;
   }
 }
 
-// ─── PHOTO WALL ───
-function triggerPhoto(slot){slot.querySelector('input[type=file]').click();}
-function loadPhoto(inp){
-  const slot=inp.closest('.photo-slot');
-  const file=inp.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    slot.querySelectorAll('.photo-icon,.photo-label').forEach(el=>el.style.display='none');
-    let img=slot.querySelector('img');
-    if(!img){img=document.createElement('img');slot.appendChild(img);}
-    img.src=e.target.result;
-    showToast('🖼️ Photo add ho gayi!');
-  };
-  reader.readAsDataURL(file);
+// ─── COUNTDOWN (16 January 2026) ───
+const startDate = new Date('2026-01-16T00:00:00');
+function updateCountdown() {
+  const now = new Date();
+  const diff = Math.max(0, now - startDate);
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor((diff % 86400000) / 3600000);
+  const mins = Math.floor((diff % 3600000) / 60000);
+  const secs = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cdDays').textContent = String(days).padStart(3,'0');
+  document.getElementById('cdHours').textContent = String(hours).padStart(2,'0');
+  document.getElementById('cdMins').textContent = String(mins).padStart(2,'0');
+  document.getElementById('cdSecs').textContent = String(secs).padStart(2,'0');
 }
-
-// ─── TRIVIA GAME ───
-const questions=[
-  {q:"Agar aapko ek novel mein kho jaana ho, toh woh jagah kaisi hogi?",opts:["Rainy cafe with old books","Cozy library at midnight","Beach with a mystery novel","Forest cottage in winter"],ans:0,msg:"Cozy sahi choice hai 🌸"},
-  {q:"Raat ko neend nahi aa rahi. Kya karoge?",opts:["Another chapter padhna","Tea banana","Chup chap chhat dekhna","Music suno aur so jao"],ans:3,msg:"Music + sleep = perfect combo 🌙"},
-  {q:"Perfect lazy Sunday kya hai aapke liye?",opts:["Novel + chai + baarish","Friends ke saath outing","Web series binge karna","Kahin nahi jaana, bas letna"],ans:0,msg:"Haan yahi toh aap hain! 📚"},
-  {q:"Baarish mein kya sabse achha lagta hai?",opts:["Bheegna","Khidki ke paas baithna","Pakode khana","Sona"],ans:1,msg:"Khidki + baarish = life 🌧"},
-  {q:"Aapke liye 'peace' ka matlab kya hai?",opts:["Silence","Good book","Warm chai","Sab teeno!"],ans:3,msg:"Bilkul sahi! Sab teeno zaroori hain ✨"},
-];
-let qIdx=0,score=0,answered=false;
-function loadQ(){
-  answered=false;
-  const q=questions[qIdx];
-  document.getElementById('gamePrompt').textContent=q.q;
-  document.getElementById('gameQ').textContent=qIdx+1;
-  document.getElementById('gameResult').textContent='';
-  document.getElementById('gameNext').classList.remove('show');
-  const opts=document.getElementById('gameOptions');
-  opts.innerHTML='';
-  q.opts.forEach((o,i)=>{
-    const btn=document.createElement('button');
-    btn.className='game-opt';btn.textContent=o;
-    btn.onclick=()=>answerQ(i,btn);
-    opts.appendChild(btn);
-  });
-}
-function answerQ(i,btn){
-  if(answered)return;answered=true;
-  const q=questions[qIdx];
-  const opts=document.querySelectorAll('.game-opt');
-  if(i===q.ans){
-    btn.classList.add('correct');score++;
-    document.getElementById('gameScore').textContent=score;
-    document.getElementById('gameResult').textContent='✨ Bilkul sahi! '+q.msg;
-    showToast('✨ Sahi jawab!');
-  } else {
-    btn.classList.add('wrong');
-    opts[q.ans].classList.add('correct');
-    document.getElementById('gameResult').textContent='💗 Koi baat nahi — '+q.msg;
-  }
-  if(qIdx<questions.length-1){
-    document.getElementById('gameNext').classList.add('show');
-  } else {
-    setTimeout(()=>{
-      document.getElementById('gameResult').textContent=`🌸 Game khatam! Score: ${score}/5 — Aap amazing hain, Didu!`;
-      showToast(`🎉 Score: ${score}/5!`);
-    },500);
-  }
-}
-function nextQuestion(){qIdx++;loadQ();}
-loadQ();
+updateCountdown(); setInterval(updateCountdown, 1000);
 
 // ─── TOAST ───
-function showToast(msg){
-  const t=document.getElementById('toast');t.textContent=msg;
-  t.classList.add('show');clearTimeout(t._t);
-  t._t=setTimeout(()=>t.classList.remove('show'),2400);
+function showToast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2200);
 }
-
-// ─── TITLE HOVER ───
-document.getElementById('mainTitle').addEventListener('mouseenter',()=>showToast('🌸 Zoya — sabse pyaari Didu 💗'));
 </script>
 </body>
 </html>
